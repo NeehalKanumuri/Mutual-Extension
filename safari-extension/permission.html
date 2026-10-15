@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mutual — Microphone Access</title>
+  <link rel="stylesheet" href="styles/sidepanel.css">
+  <style>
+    body {
+      background-color: #FBFBF9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .auth-card {
+      background: #FFFFFF;
+      border: 1px solid #EAE8E3;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      max-width: 560px;
+      width: 100%;
+      padding: 36px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .auth-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #E8EFEA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .auth-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1C1917;
+      margin: 0;
+    }
+    .auth-desc {
+      font-size: 13.5px;
+      color: #57534E;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .btn-grant {
+      background: #1C1917;
+      color: #FFFFFF;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      margin-top: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      text-decoration: none;
+    }
+    .btn-grant:hover {
+      background: #292524;
+      transform: translateY(-1px);
+    }
+    .btn-grant:active {
+      transform: translateY(0);
+    }
+    .btn-grant:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .badge-info {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+      padding: 10px 16px;
+      border-radius: 9px;
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: left;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .instruction-steps {
+      background: #F7F7F5;
+      border: 1px solid #EAE8E3;
+      border-radius: 9px;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #44403C;
+      text-align: left;
+      line-height: 1.5;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .instruction-steps ol {
+      margin: 6px 0 0 0;
+      padding-left: 20px;
+    }
+    .instruction-steps li {
+      margin-bottom: 6px;
+    }
+    .troubleshoot-box {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 9px;
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 12px;
+      color: #92400E;
+      line-height: 1.55;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+    .code-pill {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card" id="auth-card">
+    <div class="auth-icon" id="auth-icon">🎙️</div>
+    <h1 class="auth-title">Enable Microphone Access</h1>
+    <p class="auth-desc">
+      To transcribe delegation briefings and detect ambiguous directives in real-time, <strong>The Mutual</strong> needs microphone authorization in Chrome.
+    </p>
+
+    <div class="btn-row">
+      <button class="btn-grant" id="btn-grant-mic">
+        <span>🎙️</span> Allow Microphone Access
+      </button>
+      <button class="btn-grant" id="btn-test-speech" style="background:#2563EB;">
+        <span>🗣️</span> Test Speech Recognition
+      </button>
+    </div>
+
+    <div id="status-msg" style="font-size:12px; color:#78716C; min-height:18px;">
+      Click the button above to authorize your microphone.
+    </div>
+
+    <!-- Troubleshooting Guide for macOS & Chrome Site Settings -->
+    <div class="troubleshoot-box" id="troubleshoot-box">
+      <strong>⚠️ If clicking "Allow" shows an error or does nothing:</strong>
+      <ol style="margin: 6px 0 0 0; padding-left: 20px;">
+        <li>
+          <strong>Check Chrome URL Bar:</strong> Look at the address bar at the very top of this tab. Click the <strong>🎛️ Tune / Site Settings</strong> or <strong>🔒 Lock</strong> icon immediately to the left of <code>chrome-extension://...</code>. Ensure <strong>Microphone</strong> is set to <strong>Allow</strong> (not Block).
+        </li>
+        <li>
+          <strong>Check macOS System Settings:</strong> Open <strong>System Settings → Privacy & Security → Microphone</strong> and make sure <strong>Google Chrome</strong> is toggled <strong>ON</strong>.
+        </li>
+        <li>
+          <strong>Alternative 1 (Web Companion):</strong> You can run the entire platform with full native mic access at <a href="http://localhost:8000" target="_blank" style="color:#1D4ED8; font-weight:600;">http://localhost:8000</a> (no extension permission hurdles).
+        </li>
+        <li>
+          <strong>Alternative 2 (Google Meet):</strong> In Google Meet, simply click <strong>CC (Closed Captions)</strong>. The Mutual captures Meet captions directly with zero mic permissions needed!
+        </li>
+      </ol>
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button id="btn-copy-settings-url" class="btn btn-secondary btn-xs" style="font-size:11px; padding:4px 10px;">
+          📋 Copy Chrome Settings URL
+        </button>
+        <a href="http://localhost:8000" target="_blank" class="btn btn-secondary btn-xs" style="font-size:11px; padding:4px 10px; text-decoration:none;">
+          🌐 Open Web Companion (localhost:8000)
+        </a>
+      </div>
+    </div>
+
+    <div class="badge-info">
+      🔒 <strong>Privacy Assurance:</strong> Audio is processed strictly in memory for live ambiguity interception during your calls. Audio is never recorded to external servers.
+    </div>
+  </div>
+
+  <script src="permission.js"></script>
+</body>
+</html>

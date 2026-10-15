@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Mutual — Whisper Large-v3-Turbo Transcriber</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/preload.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="title-row">
+      <span style="font-size:18px;">🎙️</span>
+      <h1 class="app-title">The Mutual</h1>
+    </div>
+    <div id="status-pill" class="pill-badge">
+      <span style="width:6px; height:6px; border-radius:50%; background:#2D6A4F; display:inline-block;"></span>
+      <span id="status-text">Whisper Turbo Ready</span>
+    </div>
+  </header>
+
+  <!-- Local Whisper Model Card -->
+  <div class="card">
+    <div class="card-title">
+      <span>Local AI Model</span>
+      <span id="menubar-indicator" style="font-size:11px; text-transform:none; color:#166534; font-weight:600;">
+        ● Taskbar Top: Active
+      </span>
+    </div>
+
+    <div class="model-info-box">
+      <div style="font-weight:600; font-size:12.5px; margin-bottom:3px; color:var(--text-main);">
+        openai/whisper-large-v3-turbo
+      </div>
+      <div style="font-size:11px; color:var(--text-muted); line-height:1.4;">
+        809M Parameters • 4 Decoder Layers • Multilingual (en-IN, hi, te, ta + 95 languages)<br>
+        <a href="https://huggingface.co/openai/whisper-large-v3-turbo" target="_blank" style="color:#2563EB; text-decoration:none;">View on Hugging Face ↗</a>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-secondary btn-sm" id="btn-open-menubar" style="flex:1;">
+        <span>🖥️</span> Open in Taskbar Top
+      </button>
+      <button class="btn btn-secondary btn-sm" id="btn-open-web" style="flex:1;">
+        <span>🌐</span> Web Companion
+      </button>
+    </div>
+  </div>
+
+  <!-- Live Whisper Transcription Card -->
+  <div class="card">
+    <div class="card-title">
+      <span>Live Transcription & Delegation Monitor</span>
+      <span id="transcription-count" style="font-size:11px; text-transform:none;">0 lines</span>
+    </div>
+
+    <div style="display:flex; gap:8px; margin-bottom:10px;">
+      <button class="btn btn-block" id="btn-toggle-listen">
+        <span id="listen-icon">🎙️</span> <span id="listen-text">Start Local Whisper Listening</span>
+      </button>
+      <button class="btn btn-secondary btn-sm" id="btn-clear-transcript">
+        Clear
+      </button>
+    </div>
+
+    <div class="transcript-stream" id="transcript-stream">
+      <div style="color:var(--text-muted); font-style:italic; text-align:center; padding:16px 8px;">
+        Click 'Start Local Whisper Listening' to capture meeting speech or type a briefing below.
+      </div>
+    </div>
+
+    <!-- Quick text test -->
+    <div style="margin-top:10px; display:flex; gap:6px;">
+      <input type="text" id="quick-input" placeholder="Type or test a briefing clause..." style="flex:1; padding:6px 10px; font-size:12px; border:1px solid var(--border-color); border-radius:6px; background:var(--bg-card); color:var(--text-main);">
+      <button class="btn btn-secondary btn-sm" id="btn-send-quick">Test</button>
+    </div>
+
+    <!-- AI Submission & Proceed Action Card -->
+    <div id="submit-proceed-card" style="display:none; margin-top:10px; padding:12px; background:linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%); border:1px solid #BBF7D0; border-radius:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-size:11.5px; font-weight:700; color:#166534; display:flex; align-items:center; gap:5px;">
+          <span>⚡</span> Briefing Captured
+        </span>
+        <span id="submit-lines-badge" style="font-size:10.5px; background:#DCFCE7; color:#166534; padding:2px 8px; border-radius:999px; font-weight:600;">
+          0 lines ready
+        </span>
+      </div>
+      <p style="font-size:11.5px; color:#374151; margin:0 0 10px 0; line-height:1.4;">
+        Transcription complete. Submit the briefing to synthesize your 5-Point Micro-Contract and detect delegation ambiguity.
+      </p>
+      <button class="btn btn-block" id="btn-submit-proceed" style="background:#15803D; color:#FFFFFF; padding:10px 14px; font-size:13px; font-weight:600; border-radius:8px; border:none; cursor:pointer;">
+        <span id="submit-proceed-icon">⚡</span> <span id="submit-proceed-text">Submit Briefing & Run AI Analysis →</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Behavioral Interventions (Ambiguity Flags) -->
+  <div class="card" id="flags-card" style="display:none;">
+    <div class="card-title" style="color:#DC2626;">
+      <span>⚠️ Ambiguity Interventions (<span id="flags-count">0</span>)</span>
+    </div>
+    <div id="flags-container" style="display:flex; flex-direction:column; gap:8px;"></div>
+  </div>
+
+  <!-- Alignment Handshake Studio -->
+  <div class="card">
+    <div class="card-title">
+      <span>5-Point Micro-Contract</span>
+    </div>
+
+    <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 10px 0;">
+      Synthesizes an explicit mutual agreement from the local Whisper transcript.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn btn-secondary btn-block" id="btn-generate-contract">
+        <span>⚡</span> Synthesize Micro-Contract
+      </button>
+
+      <button class="btn btn-block" id="btn-send-to-agent" style="display:none; background:#1D4ED8;">
+        <span>💬</span> Send Contract to Active Conversation
+      </button>
+    </div>
+
+    <div id="contract-display" style="display:none; margin-top:12px; font-size:12px;"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

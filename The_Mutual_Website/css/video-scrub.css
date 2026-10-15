@@ -1,0 +1,287 @@
+/* ==========================================================================
+   THE MUTUAL — Scroll-Driven Video Scrubbing & Handshake Storytelling
+   Video: business_handshake.mp4
+   Theme: Deep Forest Green & Obsidian Black Shades
+   Strict Rule: Zero rounded corners (border-radius: 0)
+   ========================================================================== */
+
+.handshake-story-section {
+  position: relative;
+  background-color: var(--bg-black);
+  z-index: 15;
+}
+
+/* Scroll Runway Track: scroll progress controls video.currentTime */
+.video-scrub-runway {
+  position: relative;
+  height: 3400px; /* provides ample runway for frame-by-frame scrubbing */
+  width: 100%;
+}
+
+/* Sticky Viewport pinned while scrolling through the runway */
+.video-scrub-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Video Element */
+.scrub-video-element {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: contrast(1.1) brightness(0.75);
+  transition: filter 0.2s ease;
+}
+
+/* Dynamic Dimmer Overlay (Opacity and darkness deepen as scroll progresses) */
+.video-dimmer-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(circle at center, rgba(13, 46, 31, 0.45) 0%, rgba(5, 5, 5, 0.92) 80%);
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.1s linear, background 0.2s ease;
+}
+
+/* Architectural Grid lines over video */
+.video-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* HUD Header for Handshake Stage */
+.video-scrub-hud {
+  position: absolute;
+  top: 78px;
+  left: 48px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.video-hud-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: rgba(8, 10, 9, 0.88);
+  border: 1px solid var(--green-border);
+  padding: 6px 14px;
+}
+
+.video-scrub-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(8, 10, 9, 0.88);
+  border: 1px solid var(--border-hairline);
+  padding: 6px 14px;
+}
+
+.scrub-timeline-bar {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.scrub-timeline-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: #38DF78;
+}
+
+/* ==========================================================================
+   Handshake Storytelling Stage (Exact Match to Design Screenshot)
+   ========================================================================== */
+.video-story-stage-unified {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 860px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin: 0 auto;
+}
+
+/* Monospace Phase Eyebrow Tag: [ PHASE 01 // BEFORE THE HANDSHAKE ] */
+.story-stage-indicator {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #38DF78;
+  margin-bottom: 22px;
+  user-select: none;
+}
+
+/* Multi-line Punchy Hero Heading */
+.story-heading {
+  font-family: var(--sans);
+  font-size: clamp(34px, 4.2vw, 56px);
+  font-weight: 800;
+  line-height: 1.18;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  margin: 0 0 24px 0;
+  white-space: normal;
+}
+
+/* Crisp Sharp Box around HANDSHAKE (Exact Match to Screenshot 1) */
+.handshake-keyword {
+  color: #38DF78;
+  font-weight: 900;
+  background: rgba(20, 56, 37, 0.75);
+  border: 2px solid #22C55E;
+  border-radius: 0;
+  padding: 2px 14px;
+  display: inline-block;
+  vertical-align: baseline;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.25);
+  margin-right: 6px;
+}
+
+/* High-Legibility Narrative Body */
+.story-body {
+  font-size: 16.5px;
+  color: #A0ABA4;
+  line-height: 1.68;
+  max-width: 680px;
+  margin: 0 0 26px 0;
+}
+
+.story-body strong {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* Bilateral Sign-Off Strip */
+.story-signoff-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: rgba(8, 10, 9, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 99px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 18px;
+}
+
+.signoff-party {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-primary);
+}
+
+.signoff-chip {
+  padding: 2px 7px;
+  background: rgba(20, 56, 37, 0.6);
+  border: 1px solid rgba(56, 223, 120, 0.35);
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #38DF78;
+}
+
+.signoff-sep {
+  color: rgba(255, 255, 255, 0.2);
+  font-family: var(--font-mono);
+}
+
+.signoff-status-pending {
+  color: #D97706;
+  font-weight: 700;
+}
+
+.signoff-status-signed {
+  color: #38DF78;
+  font-weight: 700;
+}
+
+/* 5-Point Compact Protocol Bar */
+.hs-protocol-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 760px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.hs-protocol-summary.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hs-protocol-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 12px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+.hs-protocol-pill.active {
+  color: #38DF78;
+  background: rgba(20, 56, 37, 0.4);
+  border-color: rgba(56, 223, 120, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .video-story-stage-unified {
+    padding: 0 24px;
+  }
+  .story-signoff-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 14px;
+    padding: 12px 18px;
+  }
+  .signoff-sep {
+    display: none;
+  }
+}

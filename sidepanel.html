@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mutual — Behavioral Alignment</title>
+  <link rel="stylesheet" href="styles/sidepanel.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       OPENING SPLASH / LOADING ANIMATION (The Mutual Architectural Logo)
+       ==================================================================== -->
+  <div id="app-splash-screen" class="splash-screen" aria-label="Loading The Mutual">
+    <div class="splash-content">
+      <div class="splash-logo-wrapper">
+        <svg class="splash-logo-svg" viewBox="0 0 80 80" width="76" height="76">
+          <circle class="splash-ring splash-ring-left" cx="30" cy="40" r="22" />
+          <circle class="splash-ring splash-ring-right" cx="50" cy="40" r="22" />
+          <ellipse class="splash-eclipse" cx="40" cy="40" rx="12" ry="18" />
+        </svg>
+      </div>
+      <div class="splash-branding">
+        <h1 class="splash-title">THE MUTUAL</h1>
+        <p class="splash-tagline">BEHAVIORAL ALIGNMENT</p>
+      </div>
+      <div class="splash-progress-track">
+        <div class="splash-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: SUPABASE AUTHENTICATION (Individual & Corporation Multi-Tenant)
+       ==================================================================== -->
+  <div id="view-auth" class="auth-view" style="display:flex;">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2">
+            <circle cx="9" cy="12" r="6" opacity="0.6"/>
+            <circle cx="15" cy="12" r="6"/>
+          </svg>
+        </div>
+        <h2 class="auth-title">The Mutual</h2>
+        <p class="auth-subtitle">Behavioral Alignment & Enterprise Delegation</p>
+      </div>
+
+      <!-- Category Switcher: Individual vs Corporation -->
+      <div class="auth-category-toggle">
+        <button type="button" class="category-toggle-btn active" id="btn-cat-individual">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Individual Account</span>
+        </button>
+        <button type="button" class="category-toggle-btn" id="btn-cat-corporate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+            <path d="M9 22v-4h6v4"></path>
+            <path d="M8 6h.01"></path>
+            <path d="M16 6h.01"></path>
+            <path d="M8 10h.01"></path>
+            <path d="M16 10h.01"></path>
+            <path d="M8 14h.01"></path>
+            <path d="M16 14h.01"></path>
+          </svg>
+          <span>Corporation / Enterprise</span>
+        </button>
+      </div>
+
+      <!-- ==============================================
+           PANEL 1: INDIVIDUAL AUTH
+           ============================================== -->
+      <div id="panel-auth-individual">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-auth-signup" type="button">Create Account</button>
+          <button class="auth-tab" id="tab-auth-login" type="button">Sign In</button>
+        </div>
+
+        <form id="auth-form" class="auth-form">
+          <!-- Setup Type selector (visible in Create Account mode) -->
+          <div class="form-group" id="group-account-intent">
+            <label class="form-label">Account Setup Type</label>
+            <div class="account-type-grid">
+              <label class="account-type-card active" id="card-type-corporate">
+                <input type="radio" name="indiv_account_type" value="corporate" checked style="display:none;">
+                <div class="type-card-title">Corporate Member</div>
+                <div class="type-card-desc">Join company using Company Credentials</div>
+              </label>
+              <label class="account-type-card" id="card-type-personal">
+                <input type="radio" name="indiv_account_type" value="personal" style="display:none;">
+                <div class="type-card-title">Personal / Solo</div>
+                <div class="type-card-desc">Independent contractor or personal use</div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Company Credentials input (required for corporate member) -->
+          <div class="form-group" id="group-company-code">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="indiv-company-code">Company Credentials <span style="color:#EF4444;">*</span></label>
+              <span style="font-size:10px; color:var(--text-tertiary);">Generated by CEO</span>
+            </div>
+            <input type="text" id="indiv-company-code" class="form-input" placeholder="e.g. CORP-ACME-4829" style="text-transform:uppercase; font-family:monospace; font-weight:600;" autocomplete="off">
+            <span id="code-status-msg" style="font-size:10.5px; color:var(--text-muted); margin-top:2px;">
+              Enter credentials provided by your CEO to link with colleagues
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="auth-email">Work Email</label>
+            <input type="email" id="auth-email" class="form-input" placeholder="name@company.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="auth-password">Password</label>
+              <a href="#" id="link-forgot-password-indiv" class="auth-forgot-link" style="display:none;">Forgot password?</a>
+            </div>
+            <input type="password" id="auth-password" class="form-input" placeholder="••••••••" required autocomplete="current-password" minlength="6">
+            <span style="font-size:10px; color:var(--text-muted); margin-top:2px;">Minimum 6 characters</span>
+          </div>
+
+          <div id="auth-error" class="auth-alert" style="display:none;"></div>
+          <div id="auth-success" class="auth-alert success" style="display:none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-auth-submit" id="btn-auth-submit" style="width:100%; margin-top:6px;">
+            <span id="auth-btn-label">Create Account & Calibrate Profile</span>
+          </button>
+
+          <div class="auth-footer-options">
+            <button type="button" class="btn-text-subtle" id="btn-toggle-auth-mode">
+              Already have an account? Sign In →
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ==============================================
+           PANEL 2: CORPORATION / ENTERPRISE AUTH
+           ============================================== -->
+      <div id="panel-auth-corporate" style="display:none;">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-corp-signup" type="button">Register Corporation</button>
+          <button class="auth-tab" id="tab-corp-login" type="button">CEO / Admin Sign In</button>
+        </div>
+
+        <form id="corp-auth-form" class="auth-form">
+          <!-- Register fields -->
+          <div id="group-corp-register-fields">
+            <div class="form-group">
+              <label class="form-label" for="corp-name">Company / Organization Name <span style="color:#EF4444;">*</span></label>
+              <input type="text" id="corp-name" class="form-input" placeholder="e.g. Acme Corporation / Mutual Labs">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="corp-domain">Company Domain / Industry</label>
+              <input type="text" id="corp-domain" class="form-input" placeholder="e.g. acme.com or Enterprise AI">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="corp-admin-name">CEO / Admin Full Name <span style="color:#EF4444;">*</span></label>
+              <input type="text" id="corp-admin-name" class="form-input" placeholder="e.g. Neehal Kanumuri">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="corp-email">CEO / Admin Work Email <span style="color:#EF4444;">*</span></label>
+            <input type="email" id="corp-email" class="form-input" placeholder="ceo@company.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="corp-password">Password <span style="color:#EF4444;">*</span></label>
+              <a href="#" id="link-forgot-password-corp" class="auth-forgot-link" style="display:none;">Forgot password?</a>
+            </div>
+            <input type="password" id="corp-password" class="form-input" placeholder="••••••••" required minlength="6">
+            <span style="font-size:10px; color:var(--text-muted); margin-top:2px;">Minimum 6 characters</span>
+          </div>
+
+          <div id="corp-auth-error" class="auth-alert" style="display:none;"></div>
+          <div id="corp-auth-success" class="auth-alert success" style="display:none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-auth-submit" id="btn-corp-submit" style="width:100%; margin-top:6px;">
+            <span id="corp-btn-label">Register Corporation & Generate Credentials →</span>
+          </button>
+
+          <div class="auth-footer-options">
+            <button type="button" class="btn-text-subtle" id="btn-toggle-corp-mode">
+              Already registered your company? Admin Sign In →
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ==============================================
+           PANEL 3: FORGOT / RESET PASSWORD
+           ============================================== -->
+      <div id="panel-auth-forgot" style="display:none;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+          <button type="button" class="btn-icon" id="btn-back-from-forgot" title="Back to Sign In" style="border:none; background:none; cursor:pointer; padding:2px; color:var(--text-secondary); display:flex; align-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <div>
+            <h3 style="font-size:14px; font-weight:600; color:var(--text-primary); margin:0;">Reset Password</h3>
+            <p style="font-size:11px; color:var(--text-secondary); margin:2px 0 0 0;" id="forgot-header-sub">Enter your account email to receive a verification code</p>
+          </div>
+        </div>
+
+        <form id="forgot-form" class="auth-form">
+          <!-- Step 1: Email Identification -->
+          <div class="form-group" id="group-forgot-email">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="forgot-email">Account Email <span style="color:#EF4444;">*</span></label>
+              <button type="button" id="btn-change-forgot-email" class="btn-text-subtle" style="display:none; font-size:10.5px; padding:0; text-decoration:none; color:var(--sage-accent);">Change</button>
+            </div>
+            <input type="email" id="forgot-email" class="form-input" placeholder="name@company.com" required autocomplete="email">
+            <span style="font-size:10.5px; color:var(--text-muted); margin-top:2px;" id="forgot-email-hint">
+              Enter the email address registered with your account
+            </span>
+          </div>
+
+          <!-- Step 2: Verification Code (OTP) & New Password Fields -->
+          <div id="group-forgot-step2" style="display:none; flex-direction:column; gap:12px;">
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label class="form-label" for="forgot-otp-code">Verification Code <span style="color:#EF4444;">*</span></label>
+                <button type="button" id="btn-resend-forgot-code" class="btn-text-subtle" style="font-size:10.5px; padding:0; text-decoration:none; color:var(--sage-accent);">
+                  Resend Code
+                </button>
+              </div>
+              <input type="text" id="forgot-otp-code" class="form-input" placeholder="e.g. 123456" maxlength="64" autocomplete="one-time-code" style="letter-spacing:2px; font-family:monospace; font-weight:600; text-align:center; font-size:14px;">
+              <span style="font-size:10px; color:var(--text-muted); margin-top:2px;">
+                Enter the 6-digit code or link token sent to your email
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="forgot-new-password">New Password <span style="color:#EF4444;">*</span></label>
+              <input type="password" id="forgot-new-password" class="form-input" placeholder="••••••••" minlength="6" autocomplete="new-password">
+              <span style="font-size:10px; color:var(--text-muted); margin-top:2px;">Minimum 6 characters</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="forgot-confirm-password">Confirm New Password <span style="color:#EF4444;">*</span></label>
+              <input type="password" id="forgot-confirm-password" class="form-input" placeholder="••••••••" minlength="6" autocomplete="new-password">
+            </div>
+          </div>
+
+          <div id="forgot-error" class="auth-alert" style="display:none;"></div>
+          <div id="forgot-success" class="auth-alert success" style="display:none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-auth-submit" id="btn-forgot-submit" style="width:100%; margin-top:6px;">
+            <span id="forgot-btn-label">Send Verification Code →</span>
+          </button>
+
+          <div class="auth-footer-options" style="margin-top:10px;">
+            <button type="button" class="btn-text-subtle" id="btn-cancel-forgot">
+              Return to Sign In
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: PROFILE BUILDING (Calibrate Name, Company, Role Suggestions)
+       ==================================================================== -->
+  <div id="view-profile-building" class="profile-view" style="display:none;">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-step-pill">Profile Calibration</div>
+        <h2 class="profile-title">Build Your Profile</h2>
+        <p class="profile-subtitle">Calibrate your perspective so The Mutual can safeguard your delegation, scope boundaries, and contract reviews.</p>
+      </div>
+
+      <form id="profile-form" class="profile-form">
+        <div class="form-group">
+          <label class="form-label" for="profile-name">Full Name <span style="color:#EF4444;">*</span></label>
+          <input type="text" id="profile-name" class="form-input" placeholder="e.g. Neehal Kanumuri" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="profile-company">Company / Organization <span style="color:#EF4444;">*</span></label>
+          <input type="text" id="profile-company" class="form-input" placeholder="e.g. Acme Corp / Mutual Labs" required autocomplete="organization">
+        </div>
+
+        <div class="form-group" style="position:relative;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="form-label" for="profile-role">Your Role <span style="color:#EF4444;">*</span></label>
+            <span style="font-size:10px; color:var(--text-tertiary);">Search 65+ suggestions</span>
+          </div>
+          <input type="text" id="profile-role" class="form-input" placeholder="Start typing... e.g. Team Manager, Sponsor Manager, Client..." required autocomplete="off">
+          
+          <!-- Role Suggestions Dropdown -->
+          <div id="role-suggestions-container" class="suggestions-dropdown" style="display:none;">
+            <div class="suggestions-header">Matching Roles (Type to filter)</div>
+            <div id="role-suggestions-list" class="suggestions-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Default Alignment Perspective</label>
+          <div class="perspective-radio-grid">
+            <label class="perspective-radio-card active" id="perspective-card-emp">
+              <input type="radio" name="default_perspective" value="employee" checked style="display:none;">
+              <div class="perspective-card-title">Contributor / Executor</div>
+              <div class="perspective-card-desc">Protect psychological safety, catch vague tasks, avoid rework loops</div>
+            </label>
+            <label class="perspective-radio-card" id="perspective-card-mgr">
+              <input type="radio" name="default_perspective" value="manager" style="display:none;">
+              <div class="perspective-card-title">Manager / Delegation Leader</div>
+              <div class="perspective-card-desc">Set crisp expectations, eliminate ambiguity, establish DoD</div>
+            </label>
+            <label class="perspective-radio-card" id="perspective-card-client">
+              <input type="radio" name="default_perspective" value="client" style="display:none;">
+              <div class="perspective-card-title">Client / Sponsor</div>
+              <div class="perspective-card-desc">Safeguard project deliverables, contracts, and budget boundaries</div>
+            </label>
+          </div>
+        </div>
+
+        <div id="profile-error" class="auth-alert" style="display:none;"></div>
+
+        <button type="submit" class="btn btn-primary" id="btn-save-profile" style="width:100%; margin-top:8px;">
+          Complete Profile & Enter Workspace →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: CORPORATION CREDENTIALS GENERATED (Welcome & Key Display)
+       ==================================================================== -->
+  <div id="view-corp-credentials-created" class="auth-view" style="display:none;">
+    <div class="auth-card" style="text-align:center;">
+      <div class="auth-logo-badge" style="background:#DCFCE7; border-color:#86EFAC;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h2 class="auth-title" id="created-corp-name">Acme Corporation Registered!</h2>
+      <p class="auth-subtitle">Your corporate behavioral shield is active. Here are your company credentials:</p>
+
+      <div class="corp-credentials-hero" style="text-align:left; margin:16px 0;">
+        <div class="corp-cred-label">Company Credentials for Employee Signup</div>
+        <div class="corp-cred-row">
+          <span class="code-monospace" id="display-generated-code">CORP-ACME-8472</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-generated-code" style="gap:4px;">
+            <span>Copy Code</span>
+          </button>
+        </div>
+        <p style="font-size:11px; color:#166534; margin:8px 0 0 0; line-height:1.4;">
+          Share this code with your executives, managers, and team members. When they sign up under <strong>Individual Account → Corporate Member</strong>, they enter this code to join your organization and team directory.
+        </p>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="btn-go-to-corp-portal" style="width:100%; margin-top:8px;">
+        Open Corporation Portal & Team Directory →
+      </button>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: CORPORATION PAGE & ENTERPRISE PORTAL
+       ==================================================================== -->
+  <div id="view-corporation-page" class="view-corporation" style="display:none;">
+    <!-- Top sticky bar -->
+    <div class="corp-top-bar">
+      <div class="corp-top-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <path d="M9 22v-4h6v4"></path>
+          <path d="M8 6h.01"></path>
+          <path d="M16 6h.01"></path>
+          <path d="M8 10h.01"></path>
+          <path d="M16 10h.01"></path>
+          <path d="M8 14h.01"></path>
+          <path d="M16 14h.01"></path>
+        </svg>
+        <span id="portal-corp-name">Corporation Portal</span>
+        <span class="badge-corp-role" id="portal-user-role-badge">Admin</span>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-corp-back-to-workspace" style="gap:5px;">
+        <span>← Back to Workspace</span>
+      </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="corp-main-container">
+      <!-- Organization Hero Card -->
+      <div class="corp-hero-card">
+        <div class="corp-hero-header">
+          <div>
+            <h1 class="corp-org-title" id="corp-banner-title">Acme Corporation</h1>
+            <p class="corp-org-sub" id="corp-banner-sub">Enterprise Behavioral Alignment Shield • CEO: Neehal Kanumuri</p>
+          </div>
+          <span class="status-badge" style="background:#DCFCE7; color:#15803D; border:1px solid #BBF7D0; font-size:11px; padding:3px 8px; border-radius:9999px; font-weight:600;">
+            Active Shield
+          </span>
+        </div>
+
+        <!-- Credentials Banner with Copy & Share -->
+        <div class="corp-credentials-hero">
+          <div class="corp-cred-label">Company Credentials for Employee Signup</div>
+          <div class="corp-cred-row">
+            <span class="code-monospace" id="portal-display-code">CORP-ACME-8472</span>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="btn btn-primary btn-sm" id="btn-portal-copy-code" style="gap:4px;">
+                <span>Copy Code</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-portal-share-invite" style="gap:4px;">
+                <span>Share Invite</span>
+              </button>
+            </div>
+          </div>
+          <p style="font-size:11px; color:#166534; margin:8px 0 0 0; line-height:1.4;">
+            New employees joining your company enter this code during <strong>Individual Signup</strong> to automatically connect to this corporate workspace and team directory.
+          </p>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <div class="corp-stats-grid" style="margin-top:16px;">
+          <div class="corp-stat-card">
+            <span class="corp-stat-num" id="stat-member-count">1</span>
+            <span class="corp-stat-label">Connected Members</span>
+          </div>
+          <div class="corp-stat-card">
+            <span class="corp-stat-num">98.4%</span>
+            <span class="corp-stat-label">Delegation Alignment</span>
+          </div>
+          <div class="corp-stat-card">
+            <span class="corp-stat-num">0</span>
+            <span class="corp-stat-label">Rework Cycles</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connected Team Directory -->
+      <div class="corp-directory-card">
+        <div class="corp-dir-header">
+          <div>
+            <h2 class="corp-dir-title">Connected Company Team Directory</h2>
+            <p style="font-size:11px; color:var(--text-tertiary); margin:2px 0 0 0;">All executives, managers, and contributors who joined using this company's credentials</p>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-refresh-corp-dir" style="font-size:11px;">
+            <span>↻ Refresh</span>
+          </button>
+        </div>
+
+        <div class="corp-members-list" id="corp-members-list-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Corporate Alignment Policies & Guardrails -->
+      <div class="corp-hero-card">
+        <h3 style="font-size:13px; font-weight:700; margin:0 0 8px 0; color:var(--text-primary);">Corporation Alignment & Policy Enforcement</h3>
+        <p style="font-size:11.5px; color:var(--text-secondary); margin:0 0 12px 0; line-height:1.4;">
+          The Mutual automatically enforces organizational clarity safeguards across all connected corporate members during meetings, Slack huddles, and document check-ins.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm);">
+            <div>
+              <div style="font-size:11.5px; font-weight:600; color:var(--text-primary);">5-Pillar Micro-Contract Enforcement</div>
+              <div style="font-size:10.5px; color:var(--text-secondary);">Mandates Definition of Done, Scope, Deliverables, Boundaries & Deadlines</div>
+            </div>
+            <span style="font-size:11px; font-weight:600; color:#15803D;">Enforced</span>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm);">
+            <div>
+              <div style="font-size:11.5px; font-weight:600; color:var(--text-primary);">Clarity Threshold Before Assignment</div>
+              <div style="font-size:10.5px; color:var(--text-secondary);">Flag ambiguous manager handshakes before contributor accepts</div>
+            </div>
+            <span style="font-size:11px; font-weight:600; color:#15803D;">85% Minimum</span>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm);">
+            <div>
+              <div style="font-size:11.5px; font-weight:600; color:var(--text-primary);">Rework Prevention & Psychological Safety</div>
+              <div style="font-size:10.5px; color:var(--text-secondary);">Protect contributors from vague verbal scopes that lead to rework loops</div>
+            </div>
+            <span style="font-size:11px; font-weight:600; color:#15803D;">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: ACTIVE ASSIGNMENTS & MEETING HISTORY HUB
+       ==================================================================== -->
+  <div id="view-assignments-history" class="view-corporation" style="display:none;">
+    <div class="corp-top-bar">
+      <div class="corp-top-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <div>
+          <span style="font-weight:700; font-size:13px; color:var(--text-primary);">Assignments & History Hub</span>
+          <span id="hub-company-label" style="font-size:10.5px; color:var(--text-tertiary); display:block;">Company Ledger</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-close-assignments-hub" style="font-size:11px; padding:4px 10px;">
+        Back to Workspace
+      </button>
+    </div>
+
+    <!-- Hub Sub-Tabs -->
+    <div style="padding:12px 16px 0 16px; background:var(--bg-surface);">
+      <div class="auth-tabs" style="margin-bottom:12px;">
+        <button class="auth-tab active" id="tab-hub-tasks" type="button">Active Assignments (DoD)</button>
+        <button class="auth-tab" id="tab-hub-history" type="button">Meeting History Log</button>
+      </div>
+    </div>
+
+    <div style="padding:0 16px 24px 16px;">
+      <!-- Panel 1: Active Assignments (DoD Acceptance Checklist) -->
+      <div id="panel-hub-tasks">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            Active Sprints & Delegation Tasks
+          </span>
+          <button type="button" class="btn btn-secondary btn-xs" id="btn-refresh-tasks" style="font-size:10.5px; padding:3px 8px;">
+            Refresh
+          </button>
+        </div>
+        <div id="tasks-ledger-container" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Panel 2: Meeting History Log -->
+      <div id="panel-hub-history" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            Historical Detected Meetings
+          </span>
+          <button type="button" class="btn btn-secondary btn-xs" id="btn-refresh-history" style="font-size:10.5px; padding:3px 8px;">
+            Refresh
+          </button>
+        </div>
+        <div id="meetings-history-container" style="display:flex; flex-direction:column; gap:10px;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MAIN APPLICATION WORKSPACE (Revealed upon auth)
+       ==================================================================== -->
+  <div id="view-main-app" class="app-workspace" style="display:none;">
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-group">
+      <div class="brand-icon" id="header-brand-logo" title="Replay Opening Animation" style="cursor:pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="12" r="6" opacity="0.6"/>
+          <circle cx="15" cy="12" r="6"/>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-title">The Mutual</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- Corporation Page Portal Button in Header -->
+      <button id="btn-header-corp-portal" class="btn-header-corp" aria-label="Open Corporation Portal" title="Open Corporation Portal & Team Directory" style="display:none;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <path d="M9 22v-4h6v4"></path>
+        </svg>
+        <span id="header-corp-name-label">Corporation</span>
+      </button>
+
+      <!-- Open Full Page Button -->
+      <button id="btn-open-fullpage" class="icon-header-btn" aria-label="Open Full Page View" title="Open Full Page View (New Tab) ↗">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </button>
+      <div class="header-status">
+        <span class="status-dot" id="server-status-dot"></span>
+      </div>
+      <button id="btn-hamburger" class="hamburger-btn" aria-label="Open Navigation Menu" title="Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Segmented Navigation Tabs (Core 3 Steps) -->
+  <div class="nav-tabs-wrapper">
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-interceptor">1. Interceptor</button>
+      <button class="tab-btn" data-tab="tab-handshake">2. Handshake</button>
+      <button class="tab-btn" data-tab="tab-preflight">3. Preflight</button>
+    </nav>
+  </div>
+
+  <!-- Main Scrollable Content Container -->
+  <main class="main-content">
+
+    <!-- ====================================================================
+         TAB 1: Ambiguity Interceptor
+         ==================================================================== -->
+    <div class="tab-pane active" id="tab-interceptor">
+
+      <!-- Real-Time Zero-Friction Meeting Mesh HUD (Interceptor Page) -->
+      <div id="meeting-mesh-hud-interceptor" class="meeting-mesh-hud">
+        <div class="mesh-hud-top">
+          <div class="mesh-hud-info">
+            <span class="mesh-badge-indicator" id="mesh-badge-indicator">[MESH SYNC]</span>
+            <span class="mesh-meeting-title" id="mesh-meeting-title">Detecting Call...</span>
+            <span class="mesh-meeting-id code-monospace" id="mesh-meeting-id">--</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-xs btn-open-tasks-hub" id="btn-open-tasks-hub" style="font-size:10px; padding:3px 8px; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0;">
+            Assignments Hub →
+          </button>
+        </div>
+
+        <!-- Meeting Mode Selector (Under Sync Button / Info) -->
+        <div class="mesh-mode-row">
+          <div class="mesh-mode-select-wrap">
+            <span class="mesh-mode-label">MODE:</span>
+            <select id="meeting-mode-dropdown" class="mesh-mode-dropdown" title="Select Meeting Mode">
+              <option value="auto">Auto-Detect Online Call (Meet / Zoom / Teams / Slack)</option>
+              <option value="offline">In-Person / Offline Meeting</option>
+            </select>
+          </div>
+          <div id="offline-room-picker" class="offline-room-picker" style="display:none;">
+            <select id="offline-room-select" class="mesh-room-dropdown" title="Select In-Person Conference Room">
+              <option value="conf-alpha">Conference Room Alpha</option>
+              <option value="board-room">Board Room</option>
+              <option value="sprint-room-1">Sprint Room 1</option>
+              <option value="war-room">War Room</option>
+              <option value="custom">Custom Room...</option>
+            </select>
+            <input type="text" id="offline-custom-room-input" class="mesh-room-input" placeholder="Room name..." style="display:none;" />
+          </div>
+        </div>
+
+        <div class="mesh-participants-strip" id="mesh-participants-strip">
+          <span style="font-size:11px; color:var(--text-muted); font-style:italic;">Open Meet, Zoom, Teams, Slack or select In-Person Room to connect team</span>
+        </div>
+      </div>
+
+      <!-- Meeting Audio Input Controls -->
+      <div class="simulator-bar" style="margin-top: 10px;">
+        <!-- Live Microphone & Audio Input Panel -->
+        <div id="panel-live-mic">
+          <!-- Idle / Start State -->
+          <div id="mic-idle-controls" style="display:flex; align-items:center; gap:8px;">
+            <button class="btn btn-primary btn-sm" id="btn-toggle-live-mic" style="flex:1; padding:7px 12px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span id="live-mic-btn-icon" style="display:none;"></span>
+              <span id="live-mic-btn-text">Start Live Listening</span>
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-feed">
+              Clear
+            </button>
+            <button class="btn btn-sage btn-sm" id="btn-goto-handshake">
+              Handshake →
+            </button>
+          </div>
+
+          <!-- Active Recording State: Stop Button + Audio Wave Video -->
+          <div id="mic-active-controls" style="display:none; align-items:center; gap:8px; width:100%;">
+            <button class="btn-stop-compact" id="btn-stop-live-mic" type="button" title="Stop Recording" aria-label="Stop Recording">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="#FFFFFF"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+            </button>
+
+            <!-- Audio Wave Video Playing Inside The Button -->
+            <button class="audiowave-btn" id="btn-listening-wave" type="button" title="Listening active (Click to stop)">
+              <video id="audiowave-video" src="audiowave.mp4" autoplay loop muted playsinline></video>
+            </button>
+
+            <button class="btn btn-secondary btn-sm" id="btn-clear-feed-active" style="padding:7px 10px; flex-shrink:0;">
+              Clear
+            </button>
+            <button class="btn btn-sage btn-sm" id="btn-goto-handshake-active" style="padding:7px 10px; flex-shrink:0;">
+              Handshake →
+            </button>
+          </div>
+
+          <div style="display:none;">
+            <span class="status-dot" id="mic-status-dot"></span>
+            <span id="mic-status-description"></span>
+          </div>
+
+          <!-- Offline / File Input: Add Text & Add Pre-Recorded Audio -->
+          <div style="margin-top:10px; border-top:1px dashed var(--border-subtle); padding-top:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">Direct Briefing Input</span>
+              <div style="display:flex; gap:6px;">
+                <button id="btn-toggle-quick-input" class="btn btn-secondary btn-xs" style="padding:2px 8px; font-size:10.5px; border-radius:4px;">Add Text</button>
+                <button id="btn-toggle-audio-upload" class="btn btn-secondary btn-xs" style="padding:2px 8px; font-size:10.5px; border-radius:4px; display:inline-flex; align-items:center; gap:4px;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  Add Audio
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Text Input -->
+            <div id="quick-input-container" style="display:none; flex-direction:column; gap:6px; margin-top:6px;">
+              <textarea id="quick-input-text" placeholder="Type or paste briefing notes (e.g. Sometime next week, deliver a clean prototype for leadership...)" rows="2" style="width:100%; font-size:11.5px; font-family:inherit; padding:6px 8px; border:1px solid var(--border-subtle); border-radius:6px; resize:vertical; box-sizing:border-box; background:var(--bg-surface); color:var(--text-primary);"></textarea>
+              <div style="display:flex; justify-content:flex-end; gap:6px;">
+                <button id="btn-submit-quick-text" class="btn btn-primary btn-xs" style="font-size:11px; padding:4px 10px;">Analyze Text</button>
+              </div>
+            </div>
+
+            <!-- Pre-recorded Meeting Audio Upload Container -->
+            <div id="audio-upload-container" style="display:none; flex-direction:column; gap:8px; margin-top:8px; background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:6px; padding:10px;">
+              <input type="file" id="audio-file-input" accept="audio/*,.mp3,.wav,.m4a,.webm,.ogg,.aac" style="display:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; font-weight:600; color:var(--text-primary);">Pre-recorded Meeting Audio</span>
+                <button class="btn btn-secondary btn-xs" id="btn-browse-audio" type="button" style="font-size:10.5px;">Choose Audio File</button>
+              </div>
+              <div id="audio-file-info" style="display:none; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <span id="audio-filename" style="font-size:11px; font-weight:600; color:var(--text-primary); max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
+                  <span id="audio-filesize" style="font-size:10px; color:var(--text-muted);"></span>
+                </div>
+                <audio id="audio-preview-player" controls style="width:100%; height:32px;"></audio>
+                <button class="btn btn-primary btn-xs" id="btn-transcribe-audio" type="button" style="width:100%; padding:6px 0; font-size:11.5px; font-weight:600;">
+                  Transcribe & Detect Ambiguity
+                </button>
+              </div>
+              <div id="audio-upload-prompt" style="font-size:11px; color:var(--text-muted); text-align:center; padding:10px; border:1px dashed var(--border-medium); border-radius:4px; cursor:pointer;">
+                Click here or choose file to upload .mp3, .wav, or .m4a recording
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden simulation elements to maintain backward compatibility safely -->
+        <div style="display:none;" id="panel-simulation">
+          <select id="scenario-selector" class="select-scenario"></select>
+          <button id="btn-start-sim"></button>
+          <button id="btn-pause-sim"></button>
+          <button id="btn-audio-toggle"></button>
+          <button id="btn-clear-sim-feed"></button>
+          <button id="btn-goto-handshake-sim"></button>
+          <button id="btn-mode-live"></button>
+          <button id="btn-mode-sim"></button>
+        </div>
+      </div>
+
+      <!-- Live Meeting Transcript Stream -->
+      <div class="card" style="padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            Transcript Stream
+          </span>
+          <span id="transcript-count" style="font-size:10.5px; color:var(--text-muted);">0 lines</span>
+        </div>
+        <div class="transcript-feed" id="transcript-feed">
+          <div id="transcript-empty-state" style="color:var(--text-muted); font-style:italic; padding:12px; text-align:center;">
+            No speech captured yet.
+          </div>
+          <div id="live-interim-box" class="interim-speech-preview" style="display:none;"></div>
+        </div>
+
+        <!-- AI Submission & Proceed Action Bar -->
+        <div id="submit-proceed-card" style="display:none; margin-top:10px; padding:12px; background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-size:11.5px; font-weight:700; color:var(--text-primary);">
+              Briefing Captured
+            </span>
+            <span id="submit-lines-badge" style="font-size:10.5px; background:var(--sage-bg); color:var(--sage-text); padding:2px 8px; border-radius:999px; font-weight:600;">
+              0 lines ready
+            </span>
+          </div>
+          <p style="font-size:11.5px; color:var(--text-secondary); margin:0 0 10px 0; line-height:1.45;">
+            Briefing complete. Generate micro contract and analyze delegation risks.
+          </p>
+          <button class="btn btn-primary btn-block" id="btn-submit-proceed" style="padding:9px 14px; font-size:12.5px; font-weight:600; border-radius:6px; cursor:pointer; width:100%;">
+            <span id="submit-proceed-icon" style="display:none;"></span><span id="submit-proceed-text">Proceed to Handshake →</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Real-Time Ambiguity Flags, Comments & Live Resolution Section -->
+      <div class="interventions-wrapper" style="margin-top:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-secondary);">
+              Interventions Detected
+            </span>
+            <span id="alert-counter-badge" class="badge badge-amber badge-sm" style="font-size:10px; padding:1px 6px;">
+              <span id="alert-counter">0</span> active
+            </span>
+          </div>
+          <span style="font-size:10.5px; color:var(--text-tertiary); font-style:italic;">
+            Ask in call or comment below to resolve
+          </span>
+        </div>
+
+        <div class="alerts-container" id="alerts-container">
+          <div id="alerts-empty-state" style="padding:16px; text-align:center; background:var(--bg-surface); border:1px dashed var(--border-subtle); border-radius:var(--radius-md); color:var(--text-muted); font-size:11.5px; font-style:italic;">
+            No ambiguity detected yet. As colleagues speak, directives with missing specs or vague deadlines appear here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 2: The Alignment Handshake (Micro Contract)
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-handshake">
+
+      <!-- Streamlined Minimalist Handshake Control Bar -->
+      <div class="handshake-bar" id="handshake-banner">
+        <div class="handshake-bar-header">
+          <div class="handshake-status-group">
+            <span class="status-dot" id="handshake-status-dot" style="background:#D97706;"></span>
+            <span class="handshake-status-title" id="handshake-banner-title">Handshake Pending</span>
+            <span class="badge badge-amber badge-sm" id="handshake-banner-badge">0 / 2 Handshaked</span>
+          </div>
+          <div class="handshake-quick-actions">
+            <button class="btn btn-secondary btn-xs" id="btn-generate-contract" title="Regenerate Handshake from Call">Regenerate</button>
+            <button class="btn btn-secondary btn-xs" id="btn-copy-slack" title="Copy Handshake Recap">Copy</button>
+          </div>
+        </div>
+
+        <div class="handshake-main-action">
+          <button class="btn btn-sage btn-handshake-action" id="btn-active-persona-sign">
+            Confirm Handshake
+          </button>
+        </div>
+
+        <!-- Compact bilateral status indicators -->
+        <div class="handshake-parties-strip">
+          <div class="handshake-party-item" id="party-pill-neehal">
+            <span class="party-mini-chip" id="party-chip-self">ME</span>
+            <span class="party-mini-name" id="party-name-self">You:</span>
+            <span class="badge badge-amber badge-xs" id="badge-party-emp">Pending</span>
+          </div>
+          <span class="handshake-parties-sep">|</span>
+          <div class="handshake-party-item" id="party-pill-bhushith">
+            <span class="party-mini-chip" id="party-chip-team">TM</span>
+            <span class="party-mini-name" id="party-name-team">Counterpart:</span>
+            <span class="badge badge-amber badge-xs" id="badge-party-mgr">Pending</span>
+          </div>
+        </div>
+
+        <!-- Hidden elements to preserve backward-compatible DOM bindings safely -->
+        <div style="display:none;">
+          <span id="handshake-banner-sub"></span>
+          <span id="party-state-neehal"></span>
+          <span id="party-state-bhushith"></span>
+          <span id="active-persona-action-prompt"></span>
+          <button id="btn-quick-switch-persona"></button>
+          <button id="btn-load-ideal-contract"></button>
+        </div>
+      </div>
+
+      <!-- Micro Contract Clauses List -->
+      <div id="clauses-list" style="display:flex; flex-direction:column; gap:10px;">
+        <!-- Clauses injected dynamically -->
+      </div>
+
+      <div style="margin-top:4px;">
+        <button class="btn btn-primary" id="btn-goto-preflight" style="width:100%;">
+          Proceed to Preflight Check →
+        </button>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 3: Preflight Deliverable Auditor
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-preflight">
+      <div class="section-hero">
+        <h2 class="section-title">Preflight Audit</h2>
+        <p class="section-desc">Audit draft deliverables against agreed contract terms before submission.</p>
+      </div>
+
+      <!-- Source selection & document upload buttons -->
+      <div class="card" style="padding:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            Deliverable / Assignment Document
+          </span>
+          <div style="display:flex; gap:6px;">
+            <input type="file" id="preflight-file-input" accept=".txt,.md,.pdf,.doc,.docx,.json,.rtf,.csv" style="display:none;">
+            <button class="btn btn-primary btn-sm" id="btn-upload-document" type="button" style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; padding:5px 10px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Document
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-pull-active-tab" type="button" style="font-size:11.5px; padding:5px 10px;">
+              Import Tab
+            </button>
+          </div>
+        </div>
+
+        <!-- Document Attachment Chip -->
+        <div id="preflight-attachment-chip" style="display:none; align-items:center; justify-content:space-between; background:var(--sage-bg); border:1px solid var(--sage-border); border-radius:6px; padding:6px 10px; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+            <span class="badge badge-sage badge-xs" style="font-family:monospace; font-weight:700;">[DOC]</span>
+            <span id="preflight-filename" style="font-size:11.5px; font-weight:600; color:var(--sage-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;"></span>
+            <span id="preflight-filesize" style="font-size:10px; color:var(--sage-accent);"></span>
+          </div>
+          <button id="btn-remove-attachment" type="button" style="background:none; border:none; cursor:pointer; color:var(--sage-text); font-size:14px; font-weight:700;" title="Remove document">✕</button>
+        </div>
+
+        <textarea id="deliverable-input" class="clause-textarea" style="min-height:120px; font-size:12px;" placeholder="Upload an assignment document (.pdf, .txt, .md, .docx) or paste draft text here. The AI will evaluate delivery completeness and psychological alignment..."></textarea>
+
+        <div style="margin-top:10px; display:flex; justify-content:flex-end;">
+          <button class="btn btn-primary" id="btn-run-audit" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            Run AI Evaluation
+          </button>
+        </div>
+      </div>
+
+      <!-- Audit Results (Hidden initially until audited) -->
+      <div id="audit-results-card" class="card" style="display:none;">
+        <div class="audit-score-card">
+          <div class="score-circle-group">
+            <div class="score-number" id="audit-score-num">--%</div>
+            <div>
+              <div style="font-size:13px; font-weight:600; color:var(--text-primary);" id="audit-verdict-text">
+                Audit Complete
+              </div>
+              <div class="score-label" id="audit-score-detail">
+                Cross-referenced against contractual clauses
+              </div>
+            </div>
+          </div>
+          <span class="badge badge-sage" id="audit-verdict-badge">Verified</span>
+        </div>
+
+        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary); margin-top:6px;">
+          Clause Verification
+        </div>
+
+        <div class="audit-checklist" id="audit-checklist">
+          <!-- Evaluations injected here -->
+        </div>
+
+        <div style="background:var(--bg-surface-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:10px; margin-top:4px;">
+          <div style="font-size:11px; font-weight:600; color:var(--text-primary); margin-bottom:4px;">
+            Actionable Safeguards Before Sending:
+          </div>
+          <ul id="audit-remedies-list" style="font-size:11.5px; color:var(--text-secondary); padding-left:18px; line-height:1.5;">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ====================================================================
+       SLIDE-OUT DRAWER MENU (Triggered by 3-Line Hamburger Button)
+       ==================================================================== -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="drawer-menu" class="drawer-menu" aria-hidden="true">
+    <div class="drawer-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="brand-icon" style="width:22px; height:22px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="12" r="6" opacity="0.6"/>
+            <circle cx="15" cy="12" r="6"/>
+          </svg>
+        </div>
+        <span style="font-size:13px; font-weight:700; color:var(--text-primary);">The Mutual</span>
+      </div>
+      <button id="btn-close-drawer" class="drawer-close-btn" aria-label="Close Menu">✕</button>
+    </div>
+
+    <!-- Active User Status Card -->
+    <div class="drawer-user-card" id="drawer-user-card">
+      <div class="user-avatar" id="drawer-user-avatar">KN</div>
+      <div class="user-info">
+        <div class="user-name" id="drawer-user-name">Kanumuri Neehal</div>
+        <div class="user-role" id="drawer-user-role">Product & Engineering Lead</div>
+      </div>
+      <span class="user-status-pill" id="drawer-user-status">Active</span>
+    </div>
+
+    <!-- Navigation List -->
+    <nav class="drawer-nav">
+      <div class="drawer-section-label">CONTROLS</div>
+
+      <button class="drawer-item" data-action="open-settings">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Settings</span>
+          <span class="drawer-item-sub">Language models, keys, connectivity</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" data-action="open-profile">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Profile</span>
+          <span class="drawer-item-sub">Approver matrix, theme, SLA</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" id="drawer-btn-corporation" type="button">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Corporation Portal</span>
+          <span class="drawer-item-sub">Company credentials & team directory</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" id="drawer-btn-assignments-hub" type="button">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Active Assignments & History</span>
+          <span class="drawer-item-sub">Definition of Done ledger & meeting logs</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" data-action="open-auth">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Session</span>
+          <span class="drawer-item-sub" id="drawer-auth-sub">kanumurineehal@gmail.com</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" id="drawer-btn-fullpage" type="button">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Open Full Page Window</span>
+          <span class="drawer-item-sub">Open extension in wide browser tab</span>
+        </div>
+        <span class="drawer-chevron">↗</span>
+      </button>
+
+      <button class="drawer-item" id="drawer-btn-signout" type="button">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title" style="color:#EF4444;">Sign Out</span>
+          <span class="drawer-item-sub">Disconnect Supabase session</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <div class="drawer-section-label">FOUNDATIONS</div>
+
+      <button class="drawer-item" data-action="open-theory">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">OB Foundations</span>
+          <span class="drawer-item-sub">Research and organizational models</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <div class="drawer-section-label">LEGAL</div>
+
+      <button class="drawer-item" data-action="open-terms">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Terms & Conditions</span>
+          <span class="drawer-item-sub">Service agreement and liability</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+
+      <button class="drawer-item" data-action="open-privacy">
+        <div class="drawer-item-content">
+          <span class="drawer-item-title">Privacy Policy</span>
+          <span class="drawer-item-sub">Data processing and compliance</span>
+        </div>
+        <span class="drawer-chevron">→</span>
+      </button>
+    </nav>
+
+    <div class="drawer-footer">
+      <span>The Mutual v2.4</span>
+      <span>Zero-Surveillance Architecture</span>
+    </div>
+  </aside>
+
+  <!-- ====================================================================
+       SUB-VIEW 1: SETTINGS & LANGUAGE MODELS (Moved from Main Page)
+       ==================================================================== -->
+  <div id="view-settings" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">Settings & Language Models</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <!-- Section Hero -->
+      <div class="section-hero">
+        <h2 class="section-title">Language Model & Inference Engine Settings</h2>
+        <p class="section-desc">Configure local speech-to-text models, cloud cognitive reasoning engines, and API connectivity. Moved here to keep the main workspace clean and focused.</p>
+      </div>
+
+      <!-- Local Speech-to-Text Model -->
+      <div class="card">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            1. Speech-to-Text Transcription Engine
+          </span>
+          <span class="badge badge-sage">Active (MPS)</span>
+        </div>
+
+        <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+          <div class="lm-option selected">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="color:var(--text-primary); font-size:12.5px;">openai/whisper-large-v3-turbo (Local)</strong>
+              <span style="font-size:10px; background:var(--sage-bg); color:var(--sage-text); border:1px solid var(--sage-border); padding:2px 6px; border-radius:4px; font-weight:600;">Recommended</span>
+            </div>
+            <p style="font-size:11.5px; color:var(--text-secondary); margin:0 0 6px 0; line-height:1.45;">
+              809M Parameter multi-lingual speech transcription running entirely on-device via Apple Silicon Metal Performance Shaders (MPS). Audio never leaves your machine.
+            </p>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button id="btn-menubar-trigger-settings" class="btn btn-secondary btn-xs" style="padding:4px 9px; font-size:11px;">
+                Launch in macOS Taskbar Top
+              </button>
+              <span id="whisper-status-badge" style="font-size:11px; color:var(--sage-text); font-weight:500;">
+                ● Local Daemon Connected
+              </span>
+            </div>
+          </div>
+
+          <div class="lm-option">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="color:var(--text-primary); font-size:12.5px;">Web Speech API Native (Browser Engine)</strong>
+              <span style="font-size:10px; background:var(--bg-surface-subtle); color:var(--text-muted); padding:2px 6px; border-radius:4px;">Zero Overhead</span>
+            </div>
+            <p style="font-size:11.5px; color:var(--text-secondary); margin:0; line-height:1.45;">
+              Native Chromium/WebKit real-time speech recognizer with zero RAM overhead. Continuous listening enabled.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cognitive LLM for Delegation Ambiguity & Handshake Synthesis -->
+      <div class="card">
+        <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+          2. Cognitive Delegation Reasoning LLM
+        </span>
+        <p style="font-size:11.5px; color:var(--text-secondary); margin:6px 0 10px 0;">
+          Select the foundation language model that intercepts delegation ambiguity, synthesizes Micro Contracts, and audits deliverables.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">
+              Active LLM Provider
+            </label>
+            <select id="setting-llm-provider" class="clause-textarea" style="min-height:auto; height:36px; padding:6px 10px; font-size:12.5px; background:var(--bg-surface); cursor:pointer;">
+              <option value="gemini-3.5-flash-lite" selected>Google Gemini 3.5 Flash-Lite (~1s Fast Response • Active)</option>
+              <option value="gemini-3.5-flash">Google Gemini 3.5 Flash (Deep Organizational Reasoning)</option>
+              <option value="gemini-2.0-flash">Google Gemini 2.0 Flash (Next-Gen Multimodal Reasoning)</option>
+              <option value="claude-3-5-sonnet">Anthropic Claude 3.5 Sonnet (Maximum Precision & Nuance)</option>
+              <option value="gpt-4o">OpenAI GPT-4o (Omni Reasoning Engine)</option>
+              <option value="local-ollama">Local Ollama / vLLM (http://localhost:11434 - Zero Data Transfer)</option>
+            </select>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:11.5px; font-weight:600; color:var(--text-primary);">
+                Google Gemini API Key
+              </label>
+              <button id="btn-toggle-key-visibility" class="btn btn-secondary btn-xs" style="padding:1px 6px; font-size:10px;">Show Key</button>
+            </div>
+            <input type="password" id="setting-gemini-key" class="clause-textarea" style="min-height:auto; height:36px; padding:6px 10px; font-family:var(--font-mono); font-size:12px;" placeholder="AIzaSy...">
+            <span style="font-size:10.5px; color:var(--text-tertiary); display:block; margin-top:3px;">
+              Stored locally on your device. Used to power real-time psychological safety scripts and contractual DoD generation.
+            </span>
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">
+              Backend API Server URL
+            </label>
+            <input type="text" id="setting-backend-url" class="clause-textarea" style="min-height:auto; height:36px; padding:6px 10px; font-family:var(--font-mono); font-size:12px;" value="http://localhost:8000">
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavioral Preferences & Chimes -->
+      <div class="card">
+        <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+          3. Behavioral Interceptor Preferences
+        </span>
+        <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-primary); cursor:pointer;">
+            <input type="checkbox" id="setting-chime-toggle" checked style="accent-color:#2D6A4F; width:15px; height:15px;">
+            <span>Play gentle audio chime (440Hz warm sine) when managerial ambiguity is flagged</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-primary); cursor:pointer;">
+            <input type="checkbox" id="setting-auto-dod" checked style="accent-color:#2D6A4F; width:15px; height:15px;">
+            <span>Automatically convert subjective quality adjectives ('clean', 'pakka', 'pop') into testable criteria</span>
+          </label>
+        </div>
+
+        <div style="display:flex; gap:8px; justify-content:flex-end; align-items:center; margin-top:14px; border-top:1px solid var(--border-subtle); padding-top:10px;">
+          <div id="settings-status-feedback" style="font-size:11px; margin-right:auto; color:var(--text-tertiary);"></div>
+          <button class="btn btn-secondary btn-sm" id="btn-test-connection">
+            Test Connection
+          </button>
+          <button class="btn btn-primary btn-sm" id="btn-save-settings">
+            Save Configuration
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       SUB-VIEW 2: PROFILE & DELEGATION PREFERENCES
+       ==================================================================== -->
+  <div id="view-profile" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">User Profile & Delegation Matrix</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <div class="section-hero">
+        <h2 class="section-title">Executor Identity & Alignment Profile</h2>
+        <p class="section-desc">Configure your role, designated managerial approvers, and baseline psychological contract defaults.</p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div class="user-avatar" style="width:48px; height:48px; font-size:16px;">KN</div>
+          <div>
+            <h3 style="font-size:15px; font-weight:700; color:var(--text-primary);" id="profile-name-heading">Kanumuri Neehal</h3>
+            <span style="font-size:11.5px; color:var(--text-tertiary);">Product & Engineering Lead • Bellandur Tech Park</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:3px;">
+              Full Name
+            </label>
+            <input type="text" id="profile-input-name" class="clause-textarea" style="min-height:auto; height:34px; padding:6px 10px;" value="Kanumuri Neehal">
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:3px;">
+              Work Email
+            </label>
+            <input type="email" id="profile-input-email" class="clause-textarea" style="min-height:auto; height:34px; padding:6px 10px;" value="kanumurineehal@gmail.com">
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:3px;">
+              Organizational Role
+            </label>
+            <input type="text" id="profile-input-role" class="clause-textarea" style="min-height:auto; height:34px; padding:6px 10px;" value="Product & Engineering Lead (Executor)">
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:3px;">
+              Designated Primary Approver / Manager
+            </label>
+            <input type="text" id="profile-input-manager" class="clause-textarea" style="min-height:auto; height:34px; padding:6px 10px;" value="Marcus (VP Operations)">
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:3px;">
+              Standard Milestone SLA Turnaround Window
+            </label>
+            <select id="profile-input-sla" class="clause-textarea" style="min-height:auto; height:34px; padding:6px 10px; background:var(--bg-surface);">
+              <option value="24" selected>24 business hours (Standard)</option>
+              <option value="48">48 business hours (Extended)</option>
+              <option value="12">12 business hours (Urgent Sprint)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:6px;">
+              Appearance & Theme
+            </label>
+            <div class="theme-selector-grid">
+              <button type="button" class="theme-btn" data-theme-val="light" id="theme-btn-light">
+                <span class="theme-btn-title">Light</span>
+                <span class="theme-btn-desc">Clean linen</span>
+              </button>
+              <button type="button" class="theme-btn" data-theme-val="dark" id="theme-btn-dark">
+                <span class="theme-btn-title">Dark</span>
+                <span class="theme-btn-desc">Neutral dark</span>
+              </button>
+              <button type="button" class="theme-btn active" data-theme-val="system" id="theme-btn-system">
+                <span class="theme-btn-title">System</span>
+                <span class="theme-btn-desc">Auto detect</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top:8px; display:flex; justify-content:flex-end;">
+            <button class="btn btn-primary btn-sm" id="btn-save-drawer-profile">
+              Save Profile Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       SUB-VIEW 3: LOGIN / LOGOUT & SESSION MANAGER
+       ==================================================================== -->
+  <div id="view-session-manager" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">Session & Authentication</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <div class="section-hero">
+        <h2 class="section-title">Workspace Authentication</h2>
+        <p class="section-desc">Manage your identity, enterprise single sign-on (SSO), and local session tokens.</p>
+      </div>
+
+      <div class="card" id="auth-session-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+            Current Session
+          </span>
+          <span class="badge badge-sage" id="auth-status-badge">Authenticated</span>
+        </div>
+
+        <div style="padding:12px; background:var(--bg-surface-subtle); border-radius:var(--radius-sm); border:1px solid var(--border-subtle); margin-bottom:14px;">
+          <div style="font-weight:700; font-size:13px; color:var(--text-primary);" id="auth-user-email">kanumurineehal@gmail.com</div>
+          <div style="font-size:11.5px; color:var(--text-secondary); margin-top:2px;">Authentication: Enterprise Workspace SSO (Active)</div>
+          <div style="font-size:10.5px; color:var(--text-muted); margin-top:4px;">Session Token: tm_live_9f81a7b2... • Encrypted locally (AES-256)</div>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-secondary btn-sm" id="btn-switch-account" style="flex:1;">
+            Switch Account
+          </button>
+          <button class="btn btn-sm" id="btn-toggle-logout" style="flex:1; background:#991B1B; color:#FFFFFF; border:none;">
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick SSO Options -->
+      <div class="card">
+        <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary);">
+          Enterprise Single Sign-On (SSO)
+        </span>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+          <button class="btn btn-secondary btn-block" id="btn-sso-google" style="justify-content:center; gap:8px;">
+            Sign in with Google Workspace
+          </button>
+          <button class="btn btn-secondary btn-block" id="btn-sso-slack" style="justify-content:center; gap:8px;">
+            Sign in with Slack Connect
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       SUB-VIEW 4: ORGANIZATIONAL BEHAVIOR RESEARCH FOUNDATIONS
+       ==================================================================== -->
+  <div id="view-theory" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">OB Theory & Research Foundations</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <div class="section-hero">
+        <h2 class="section-title">Why The Mutual Works: Scientific Foundations</h2>
+        <p class="section-desc">Grounded in peer-reviewed research on psychological safety, contracting schemas, goal setting, and cognitive alignment.</p>
+      </div>
+
+      <div class="theory-grid">
+        <div class="theory-card">
+          <span class="theory-author">Dr. Amy Edmondson (Harvard Business School)</span>
+          <span class="theory-name">Psychological Safety & Voice Climate</span>
+          <p class="theory-desc">Subordinates routinely self-censor during ambiguous briefings due to impression management (fear of looking incompetent in high power-distance cultures). The Ambiguity Interceptor provides psychologically safe conversational scripts that depersonalize the inquiry and frame clarification as proactive stewardship.</p>
+        </div>
+
+        <div class="theory-card">
+          <span class="theory-author">Dr. Denise Rousseau (Carnegie Mellon University)</span>
+          <span class="theory-name">Psychological Contract Theory & Relational Schemas</span>
+          <p class="theory-desc">Unwritten mental models between manager and employee frequently diverge. The Micro Contract externalizes implicit assumptions into an explicit mutual agreement before work starts, preventing perceived psychological contract breach and toxic workplace disillusionment.</p>
+        </div>
+
+        <div class="theory-card">
+          <span class="theory-author">Dr. Edwin Locke & Dr. Gary Latham</span>
+          <span class="theory-name">Goal-Setting Theory & Specificity Effects</span>
+          <p class="theory-desc">Specific, difficult, and bounded goals produce significantly higher performance than 'do your best' or vague managerial guidance like 'make it pop'. The Handshake enforces crisp definition-of-done criteria that convert aesthetic subjectivity into measurable deliverables.</p>
+        </div>
+
+        <div class="theory-card">
+          <span class="theory-author">Daniel Kahneman & Amos Tversky</span>
+          <span class="theory-name">The Planning Fallacy & Ambiguity Aversion</span>
+          <p class="theory-desc">Delegators consistently underestimate project complexity when communicating casually ('adjust maadi', 'sometime next week only'). The Out-of-Scope clause actively blocks boundary erosion and creeping expectations by making anti-goals as explicit as deliverables.</p>
+        </div>
+
+        <div class="theory-card">
+          <span class="theory-author">Dr. Karl Weick (University of Michigan)</span>
+          <span class="theory-name">Organizational Sensemaking & Enacted Environments</span>
+          <p class="theory-desc">Organizational members make sense of ambiguous events retrospectively. When delegations lack clear bounds, individuals construct divergent narratives that collide during performance reviews. Real-time interception aligns sensemaking concurrently during the briefing.</p>
+        </div>
+
+        <div class="theory-card">
+          <span class="theory-author">Dr. Edgar Schein (MIT Sloan School of Management)</span>
+          <span class="theory-name">Process Consultation & Power-Distance Leveling</span>
+          <p class="theory-desc">Addressing power asymmetry requires structural intervention rather than personal bravery. The Mutual acts as a neutral third-party instrument that levels power dynamics, enabling junior executors to hold senior leaders to explicit turnaround SLAs without insubordination risk.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       SUB-VIEW 5: DETAILED TERMS AND CONDITIONS (LAWYER-DRAFTED)
+       ==================================================================== -->
+  <div id="view-terms" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">Master Terms and Conditions</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <div class="legal-container">
+        <div class="legal-meta-box">
+          <div>
+            <strong>DOCUMENT:</strong> MASTER TERMS OF SERVICE & SOFTWARE LICENSE AGREEMENT<br>
+            <strong>EFFECTIVE DATE:</strong> OCTOBER 12, 2026 • VERSION: 4.2-ENTERPRISE
+          </div>
+          <span class="badge badge-sage">LEGAL BINDING</span>
+        </div>
+
+        <div class="legal-callout">
+          <strong>IMPORTANT NOTICE TO USERS:</strong> PLEASE READ THESE MASTER TERMS AND CONDITIONS CAREFULLY. BY CLICKING "I AGREE", ACCESSING, DOWNLOADING, INSTALLING, OR UTILIZING THE MUTUAL SOFTWARE APPLICATION, BROWSER EXTENSIONS, WEBSITES, OR ACCOMPANYING BEHAVIORAL AI SERVICES (COLLECTIVELY, THE "PLATFORM"), YOU ("CUSTOMER", "YOU", OR "USER") AGREE TO BE BOUND BY ALL TERMS AND CONDITIONS SET FORTH HEREIN. IF YOU DO NOT UNCONDITIONALLY AGREE TO ALL PROVISIONS OF THIS AGREEMENT, YOU MUST IMMEDIATELY DISCONTINUE ALL ACCESS AND UNINSTALL THE SOFTWARE.
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 1. PREAMBLE, PARTIES & BINDING EFFECT</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">1.1 Contracting Entities.</span> This Master Terms of Service Agreement (the "Agreement") constitutes a legally binding contract entered into by and between The Mutual Technologies, Inc., a Delaware corporation having its principal executive offices at 100 Montgomery Street, Suite 1800, San Francisco, CA 94104 ("Company", "The Mutual", "we", "us", or "Operator"), and the individual, employer, or commercial organization accessing or utilizing the Platform ("Customer" or "User").
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">1.2 Authority & Enterprise Capacity.</span> If you are accessing or using the Platform on behalf of an employer, corporate entity, partnership, or other commercial enterprise ("Enterprise Customer"), you represent and warrant under penalty of perjury that you possess full legal authority and capacity to bind such Enterprise Customer to this Agreement. In such event, the term "Customer" shall refer collectively to such Enterprise Customer and all individual end-users authorized thereby.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 2. NATURE OF PLATFORM & NON-LEGAL NATURE OF "MICRO-CONTRACTS"</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.1 Operational Alignment Artifacts.</span> The Platform provides software tools designed to facilitate workplace communication, minimize managerial ambiguity, detect subjective delegative statements, and assist parties in creating structured "Micro Contracts", "Alignment Handshakes", and "Definitions of Done" (collectively, "Alignment Artifacts").
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.2 Express Disclaimer of Legal Contractual Effect.</span> <strong>NOTWITHSTANDING THE USE OF THE TERMS "CONTRACT", "MICRO-CONTRACT", "AGREEMENT", "SIGN-OFF", OR "HANDSHAKE" WITHIN THE PLATFORM USER INTERFACE, ALL ALIGNMENT ARTIFACTS GENERATED BY OR THROUGH THE PLATFORM ARE STRICTLY INTERNAL ORGANIZATIONAL COORDINATION INSTRUMENTS, BEHAVIORAL ALIGNMENT GUIDES, AND OPERATIONAL MEMORANDA.</strong> Alignment Artifacts do NOT constitute formal employment contracts, legal covenants, collective bargaining agreements, modifications of statutory employment relationships, or legally enforceable amendments to any underlying employment agreement, offer letter, or independent contractor agreement.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.3 Preservation of At-Will and Statutory Status.</span> Nothing contained in any Alignment Artifact, and no feature of the Platform, shall alter, modify, or supersede the at-will employment status (where applicable by law) or contractual terms governing the relationship between an employee and their employer. Neither party shall assert in any court of law, arbitration, or administrative proceeding that an Alignment Artifact modifies statutory rights, wage obligations, or grounds for termination.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 3. ACOUSTIC CAPTURE, MEETING RECORDING & TWO-PARTY WIRETAPPING CONSENT</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">3.1 Acoustic Sensing Capabilities.</span> The Platform incorporates speech-to-text transcription features capable of capturing ambient acoustic audio via the User's device microphone, audio streams from video conferencing platforms (including but not limited to Google Meet, Zoom, Microsoft Teams, Webex, and Slack), and live room audio.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">3.2 Affirmative Warranty of Two-Party Wiretapping Compliance.</span> <strong>CUSTOMER EXPRESSLY REPRESENTS, WARRANTS, AND COVENANTS THAT CUSTOMER SHALL FULLY COMPLY WITH ALL APPLICABLE FEDERAL, STATE, LOCAL, AND INTERNATIONAL EAVESDROPPING, WIRETAPPING, SURVEILLANCE, AND AUDIO RECORDING CONSENT STATUTES.</strong> This obligation encompasses, without limitation:
+          </p>
+          <p class="legal-p" style="padding-left:14px;">
+            (a) The United States Electronic Communications Privacy Act (18 U.S.C. § 2510 et seq.);<br>
+            (b) State two-party / all-party consent recording statutes, including California Penal Code § 632, Florida Statutes § 934.03, Illinois Compiled Statutes 720 ILCS 5/14-2, Massachusetts General Laws c. 272 § 99, Pennsylvania Consolidated Statutes 18 Pa.C.S. § 5703, and Washington Revised Code § 9.73.030;<br>
+            (c) The United Kingdom Investigatory Powers Act 2016 and Regulation of Investigatory Powers Act 2000;<br>
+            (d) The Indian Telegraph Act 1885 and Information Technology Act 2000; and<br>
+            (e) The General Data Protection Regulation (EU) 2016/679 ("GDPR") Article 6 and Article 9 regarding the lawful processing of biometric or voice telemetry.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">3.3 Duty to Notify Meeting Participants.</span> Customer represents and warrants that before initiating live acoustic capture, recording, or automated transcription of any communication, meeting, or phone call, Customer will provide clear, unambiguous, and timely notice to all participants that speech recognition software is active, and Customer will obtain all legally requisite affirmative consents. The Mutual disclaims any and all liability arising from Customer's failure to obtain such consents.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 4. ARTIFICIAL INTELLIGENCE & ALGORITHMIC DISCLAIMERS</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">4.1 Probabilistic & Heuristic Outputs.</span> Customer acknowledges that the Platform relies upon probabilistic artificial intelligence foundation models (including local Whisper Large-v3-Turbo, Google Gemini, Anthropic Claude, and OpenAI GPT architectures) and proprietary heuristic rules. Output generated by artificial intelligence is inherently probabilistic, may contain inaccuracies, hallucinations, omissions, or algorithmic biases, and should never be treated as legal, managerial, human resources, or psychiatric counsel.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">4.2 Suggested Psychological Safety Scripts.</span> The psychological safety scripts and conversational prompts provided by the Platform are suggested conversational aids derived from organizational behavior literature. Customer acknowledges that workplace cultural dynamics vary substantially across jurisdictions, corporate hierarchies, and interpersonal relationships. The Mutual makes no representation or warranty that utilizing any script will result in positive managerial reception, career advancement, promotion, conflict de-escalation, or immunity from adverse employment action.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">4.3 Dialectical and Colloquial Interpretation.</span> The Platform attempts to recognize regional idioms and colloquialisms (e.g., Bangalore tech park parlance such as 'do one thing', 'pakka', 'adjust maadi'). The Mutual warrants no linguistic completeness regarding the interpretation of colloquial speech or regional vernacular.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 5. INTELLECTUAL PROPERTY & DATA OWNERSHIP</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">5.1 Customer Ownership of Data and Transcripts.</span> As between Company and Customer, Customer retains all right, title, and interest (including all worldwide intellectual property rights) in and to all meeting audio, raw transcripts, project specifications, uploaded documents, deliverables, and proprietary business communications inputted into the Platform ("Customer Data").
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">5.2 Non-Training Covenant.</span> <strong>THE MUTUAL EXPRESSLY REPRESENTS AND WARRANTS THAT IT DOES NOT AND SHALL NOT UTILIZE CUSTOMER DATA, PROPRIETARY TRANSCRIPTS, OR WORK DELIVERABLES TO TRAIN, RETRAIN, FINE-TUNE, OR IMPROVE ANY PUBLIC OR FOUNDATIONAL LARGE LANGUAGE MODELS</strong> without the express, written, affirmative opt-in consent of Customer.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">5.3 Company Intellectual Property.</span> Company retains all right, title, and interest in and to the Platform, including all underlying source code, algorithms, heuristic detection engines, behavioral models, user interfaces, documentation, trademarks, trade secrets, and patents worldwide.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 6. ACCEPTABLE USE & PROHIBITION OF WORKPLACE SURVEILLANCE</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">6.1 Anti-Surveillance Covenant.</span> The Platform is designed as an employee-empowerment and mutual-alignment utility. Customer explicitly agrees NOT to utilize the Platform:
+          </p>
+          <p class="legal-p" style="padding-left:14px;">
+            (a) As clandestine employee surveillance software, keystroke logger, or covert workplace scorecard;<br>
+            (b) To systematically gather evidence for bad-faith pretextual terminations, constructive dismissal, or employee retaliation;<br>
+            (c) To conduct covert monitoring without the full awareness of affected subordinates or team members; or<br>
+            (d) In violation of any applicable labor, employment discrimination (e.g., Title VII, ADEA, ADA), or whistleblower protection statutes.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 7. DISCLAIMER OF WARRANTIES</div>
+          <p class="legal-p">
+            <strong>7.1 "AS-IS" PROVISION. TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW, THE PLATFORM, DOCUMENTATION, AND ALL OUTPUTS ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE. THE MUTUAL EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, QUIET ENJOYMENT, ACCURACY, AND NON-INFRINGEMENT.</strong>
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 8. LIMITATION OF LIABILITY</div>
+          <p class="legal-p">
+            <strong>8.1 EXCLUSION OF CONSEQUENTIAL DAMAGES. IN NO EVENT SHALL THE MUTUAL, ITS DIRECTORS, OFFICERS, EMPLOYEES, AFFILIATES, AGENTS, OR LICENSORS BE LIABLE TO CUSTOMER OR ANY THIRD PARTY FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO DAMAGES FOR LOSS OF PROFITS, LOSS OF GOODWILL, LOSS OF DATA, WORK STOPPAGE, EMPLOYMENT DISPUTES, WRONGFUL TERMINATION CLAIMS, OR REPUTATIONAL HARM, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</strong>
+          </p>
+          <p class="legal-p">
+            <strong>8.2 AGGREGATE MONETARY CAP. IN NO EVENT SHALL THE MUTUAL'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE USE OF THE PLATFORM EXCEED THE GREATER OF: (A) THE TOTAL AMOUNT ACTUALLY PAID BY CUSTOMER TO THE MUTUAL UNDER THIS AGREEMENT DURING THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO LIABILITY; OR (B) ONE HUNDRED UNITED STATES DOLLARS ($100.00 USD).</strong>
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 9. INDEMNIFICATION</div>
+          <p class="legal-p">
+            Customer shall defend, indemnify, and hold harmless The Mutual, its officers, directors, employees, and agents from and against any and all third-party claims, lawsuits, liabilities, regulatory fines, damages, settlements, costs, and expenses (including reasonable attorneys' fees) arising out of or related to: (a) Customer's violation of any applicable audio recording, eavesdropping, or wiretapping law; (b) Customer's breach of Section 3, Section 5, or Section 6 of this Agreement; or (c) any employment dispute between Customer and any employee or manager arising from the use of Alignment Artifacts.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 10. GOVERNING LAW & BINDING INDIVIDUAL ARBITRATION</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">10.1 Governing Law.</span> This Agreement and any dispute arising hereunder shall be governed by and construed in accordance with the laws of the State of Delaware, United States, without giving effect to any principles of conflicts of law.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">10.2 Mandatory Arbitration & Class Action Waiver.</span> Any dispute, controversy, or claim arising out of or relating to this Agreement shall be settled by binding individual arbitration administered by the American Arbitration Association ("AAA") under its Commercial Arbitration Rules. <strong>CUSTOMER WAIVES ANY RIGHT TO PARTICIPATE IN A CLASS ACTION, COLLECTIVE ACTION, OR REPRESENTATIVE PROCEEDING AGAINST THE MUTUAL.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       SUB-VIEW 6: DETAILED PRIVACY POLICY (LAWYER-DRAFTED)
+       ==================================================================== -->
+  <div id="view-privacy" class="subview-container">
+    <div class="subview-header">
+      <button class="btn-back-workspace" data-action="close-subview">← Back to Workspace</button>
+      <span class="subview-title">Comprehensive Privacy Policy</span>
+      <button class="drawer-close-btn" data-action="close-subview">✕</button>
+    </div>
+
+    <div class="subview-body">
+      <div class="legal-container">
+        <div class="legal-meta-box">
+          <div>
+            <strong>DOCUMENT:</strong> GLOBAL PRIVACY & DATA PROTECTION POLICY<br>
+            <strong>REGULATORY COMPLIANCE:</strong> GDPR (EU), CCPA/CPRA (CALIFORNIA), DPDP ACT 2023 (INDIA)<br>
+            <strong>EFFECTIVE DATE:</strong> OCTOBER 12, 2026 • REVISION: 4.2
+          </div>
+          <span class="badge badge-sage">PRIVACY SHIELD</span>
+        </div>
+
+        <div class="legal-callout safe">
+          <strong>PRIVACY AT THE CORE:</strong> The Mutual is architected upon principles of Privacy by Design (PbD) and Data Minimization. We do not sell personal data, we do not conduct covert behavioral profiling, and our primary speech recognition architecture (Whisper Large-v3-Turbo) processes audio locally on-device without remote transmission.
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 1. DATA CONTROLLER & SCOPE</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">1.1 Identity of Controller.</span> This Global Privacy Policy ("Privacy Policy") governs the processing of personal data by The Mutual Technologies, Inc. ("The Mutual", "we", "us", or "our"), functioning as the Data Controller under Regulation (EU) 2016/679 (General Data Protection Regulation, "GDPR"), the California Consumer Privacy Act of 2018 as amended by the California Privacy Rights Act ("CCPA/CPRA"), and the Digital Personal Data Protection Act, 2023 ("DPDP Act", India).
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">1.2 Scope of Operations.</span> This Policy applies to all interactions with our browser extensions (Chrome, Safari, Edge), native desktop sidecar applications, macOS menu bar utilities, local Python daemon servers, and web companion interfaces.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 2. CATEGORIES OF DATA COLLECTED</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.1 Audio Waveform Streams (Ephemeral).</span> When you enable live microphone capture, raw acoustic waveforms are captured through device sensor APIs. Under our default local architecture, raw audio buffers are processed in temporary RAM (chunks < 1000 milliseconds) and are immediately discarded following tokenization into text. <strong>Raw audio is never persistently written to permanent disk storage.</strong>
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.2 Text Transcripts & Meeting Notes.</span> Text representations of spoken dialogue are retained in client-side application memory (`state.capturedTranscript`) for the active duration of your meeting session. Transcripts are automatically purged upon session termination or when you click "Clear".
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.3 Account & Profile Metadata.</span> User-provided identifiers including full name, work email address, organizational role, designated manager identity, and SLA preferences.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">2.4 API Credentials & Security Tokens.</span> Third-party AI model API keys (e.g., Google Gemini API keys) are stored solely within your browser's sandboxed local storage (`chrome.storage.local` / `localStorage`) and are never routed to The Mutual's central servers.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 3. LOCAL ON-DEVICE VS. CLOUD PROCESSING ARCHITECTURE</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">3.1 Local Whisper Large-v3-Turbo Engine.</span> By default, The Mutual utilizes a local instance of the OpenAI Whisper Large-v3-Turbo model (809M parameters) hosted on the user's host machine via Apple Silicon Metal Performance Shaders (MPS) and CoreML. In this operating mode:
+          </p>
+          <p class="legal-p" style="padding-left:14px;">
+            (a) Acoustic audio is processed entirely within local hardware RAM;<br>
+            (b) Zero audio bytes, phonemes, or voice biometrics are transmitted over the public Internet;<br>
+            (c) Transcription operates with complete offline resilience; and<br>
+            (d) No third-party cloud vendor has access to the raw acoustic conversation.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">3.2 Cloud Inference Sub-Processors.</span> When you explicitly configure cloud AI processing (e.g., Google Gemini 1.5/2.0 Flash or OpenAI GPT-4o for contract generation), textual transcript excerpts are transmitted over TLS 1.3 encrypted connections directly to the selected API provider using your configured API key. All transmissions are subject to the enterprise Data Processing Agreements (DPAs) of those respective providers, which strictly prohibit utilizing customer inputs for foundation model retraining.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 4. LEGAL BASES FOR PROCESSING UNDER GDPR & DPDP ACT</div>
+          <p class="legal-p">
+            We process personal data strictly in reliance upon recognized lawful grounds under GDPR Article 6 and the Indian DPDP Act 2023:
+          </p>
+          <p class="legal-p" style="padding-left:14px;">
+            (a) <strong>Explicit Consent (Art. 6(1)(a)):</strong> Audio sensor activation occurs only upon your affirmative manual trigger ("Start Live Listening"). Consent may be revoked instantaneously at any moment by clicking "Stop";<br>
+            (b) <strong>Contractual Necessity (Art. 6(1)(b)):</strong> To synthesize Micro Contracts and perform deliverable auditing as requested by the User;<br>
+            (c) <strong>Legitimate Interests (Art. 6(1)(f)):</strong> To reduce toxic workplace ambiguity, foster psychological safety, and resolve miscommunication between delegating managers and individual contributors.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 5. WORKPLACE PRIVACY GUARANTEES & ANTI-SURVEILLANCE</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">5.1 Protection Against Covert Surveillance.</span> We structurally covenant that The Mutual is NOT designed as bossware or surveillance software. The Platform contains NO background keystroke monitoring, NO continuous passive audio surveillance when the browser extension is closed, NO employee productivity scoring, and NO remote employer dashboard that allows managerial snooping into private executor sessions.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">5.2 Dual Sign Off Integrity.</span> Contractual alignment requires bilateral concurrence. Neither party can unilaterally impose a micro contract without the other party's explicit digital sign off.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 6. DATA RETENTION & ERASURE SCHEDULES</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">6.1 Ephemeral Session Retention.</span> Spoken dialogue transcripts persist exclusively in runtime application memory for the duration of the active browser session. Clicking "Clear" instantly resets `state.capturedTranscript = []` and completely flushes all dialogue from memory.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">6.2 Local Storage Configuration.</span> User configuration settings (Gemini API key, SLA preferences, backend URL) persist within browser sandboxed storage until manually cleared via the "Reset Defaults" action.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 7. DATA SUBJECT RIGHTS</div>
+          <p class="legal-p">
+            Under GDPR, CCPA/CPRA, and DPDP Act 2023, you possess robust individual privacy rights, including:
+          </p>
+          <p class="legal-p" style="padding-left:14px;">
+            (a) <strong>Right of Access & Portability:</strong> You may export all synthesized contracts in Markdown and Slack-compatible formats at any time;<br>
+            (b) <strong>Right to Rectification:</strong> You may edit and modify any clause in the Handshake Studio prior to sign-off;<br>
+            (c) <strong>Right to Erasure ("Right to be Forgotten"):</strong> You may purge all local transcripts and stored keys instantly with one click;<br>
+            (d) <strong>Right to Restriction of Processing:</strong> You may disable cloud cognitive reasoning and operate entirely under local heuristic fallback rules; and<br>
+            (e) <strong>Right to Non-Discrimination:</strong> We will never deny services, charge differential rates, or degrade quality if you exercise statutory privacy rights.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 8. CRYPTOGRAPHIC & TECHNICAL SECURITY MEASURES</div>
+          <p class="legal-p">
+            <span class="legal-clause-num">8.1 Technical Safeguards.</span> All client-to-backend communications are encrypted in transit utilizing Transport Layer Security (TLS 1.3). Application memory is protected by strict Content Security Policies (CSP) and sandbox barriers that prevent unauthorized script injection.
+          </p>
+          <p class="legal-p">
+            <span class="legal-clause-num">8.2 Non-Retention of Voice Biometrics.</span> We do NOT extract, generate, or store voice biometric vectors, vocal pitch signatures, or speaker biometric identification profiles.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">SECTION 9. DATA PROTECTION OFFICER & CONTACT INFORMATION</div>
+          <p class="legal-p">
+            If you have questions, regulatory inquiries, or wish to exercise statutory data subject rights under GDPR, CCPA, or DPDP Act, you may contact our appointed Data Protection Officer (DPO) at:
+          </p>
+          <p class="legal-p" style="padding-left:14px; font-family:var(--font-mono); font-size:11px;">
+            Office of the Data Protection Officer<br>
+            The Mutual Technologies, Inc.<br>
+            Attn: Global Privacy & Regulatory Compliance<br>
+            Email: privacy@themutual.ai / legal@themutual.ai<br>
+            100 Montgomery Street, Suite 1800, San Francisco, CA 94104
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div> <!-- end #view-main-app -->
+
+  <!-- Floating Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="supabase-client.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#1C1917"/>
+  <circle cx="32" cy="32" r="24" fill="#2D6A4F" opacity="0.25"/>
+  <!-- Microphone body -->
+  <rect x="27" y="16" width="10" height="18" rx="5" fill="#FFFFFF"/>
+  <!-- Microphone arc -->
+  <path d="M22 27 C22 34 26 39 32 39 C38 39 42 34 42 27" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  <!-- Stand & Base -->
+  <line x1="32" y1="39" x2="32" y2="46" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  <line x1="24" y1="46" x2="40" y2="46" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  <!-- Whisper Soundwave accents -->
+  <path d="M16 26 C14 29 14 33 16 36" stroke="#52B788" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <path d="M48 26 C50 29 50 33 48 36" stroke="#52B788" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+</svg>

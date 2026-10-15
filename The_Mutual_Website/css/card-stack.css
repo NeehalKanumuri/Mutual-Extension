@@ -1,0 +1,286 @@
+/* ==========================================================================
+   THE MUTUAL — 3D Framer-Style Card Stack to 2x5 Matrix Landing
+   Based on stack-scroll.learnframer.site mechanics
+   Strict Rule: Zero rounded corners (border-radius: 0)
+   ========================================================================== */
+
+.card-stack-section {
+  position: relative;
+  background-color: var(--bg-black);
+  z-index: 10;
+}
+
+/* Section Header pinned at top of the runway */
+.card-stack-intro {
+  padding: 80px 48px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 12;
+}
+
+.segment-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.segment-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-dark-800);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.segment-pill.active {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.segment-indicator {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+}
+
+/* Scroll Runway Track: scroll progress is measured over this container */
+.card-stack-runway {
+  position: relative;
+  height: 3400px; /* ample scroll runway to enjoy both 3D fan & 2x5 landing */
+  width: 100%;
+}
+
+/* Sticky Viewport pinned while scrolling through the runway */
+.card-stack-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, rgba(13, 46, 31, 0.15) 0%, rgba(5, 5, 5, 0.98) 75%);
+  border-top: 1px solid var(--border-hairline);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+/* HUD Overlay on the sticky viewport (Scroll indicator & active segment) */
+.stack-hud {
+  position: absolute;
+  top: 24px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.stack-hud-counter {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: rgba(8, 10, 9, 0.9);
+  border: 1px solid var(--green-border);
+  padding: 6px 14px;
+}
+
+.stack-progress-track {
+  width: 180px;
+  height: 2px;
+  background: var(--border-hairline);
+  position: relative;
+}
+
+.stack-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--green-accent);
+  transition: width 0.05s linear;
+}
+
+/* 3D Perspective Parent Frame */
+.stack-parent-frame {
+  width: 100%;
+  height: 100%;
+  perspective: 1500px;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 3D Transform Wrapper: translated and rotated across scroll */
+.stack-3d-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* The Core Card Stack Container */
+.card-stack-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 252px;
+  height: 324px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Individual Card Container (Spacious, refined, and smoothly animated) */
+.stack-card-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 252px;
+  height: 324px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.25s ease;
+}
+
+.stack-card-item:hover {
+  z-index: 50 !important;
+}
+
+.stack-card-item:hover .card-box {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Inner Card Structure — Smooth, Refined, Minimalist Monochromatic */
+.card-box {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #131715 0%, #0B0E0C 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.75);
+  position: relative;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Card Header Chip (Seamless & subtle monochromatic) */
+.card-meta-bar {
+  padding: 10px 14px 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+}
+
+.card-segment-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* Card Image Container */
+.card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 122px;
+  overflow: hidden;
+  background: #050505;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.02) brightness(0.9);
+  transition: filter 0.25s ease, transform 0.3s ease;
+}
+
+.stack-card-item:hover .card-image-wrap img {
+  filter: contrast(1.04) brightness(0.98);
+}
+
+/* Card Body: Quote & Problem */
+.card-content-body {
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.card-struggle-quote {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.38;
+  margin-bottom: 6px;
+}
+
+.card-struggle-desc {
+  font-size: 11px;
+  color: #929A94;
+  line-height: 1.45;
+}
+
+.card-ob-tag {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #5A625C;
+  text-transform: uppercase;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .card-stack-center {
+    width: 200px;
+    height: 280px;
+  }
+  .stack-card-item {
+    width: 200px;
+    height: 280px;
+  }
+  .card-image-wrap {
+    height: 100px;
+  }
+}

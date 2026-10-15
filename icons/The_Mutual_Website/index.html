@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Mutual — Same page, before the work starts</title>
+  <meta name="description" content="An Organizational Behavior (OB) browser extension for Google Meet, Zoom, and Slack that stops delegation failure before work begins.">
+
+  <!-- Editorial Typography & DM Sans -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=DM+Sans:wght@400;500;700&display=swap">
+
+  <!-- Core Architectural Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/card-stack.css">
+  <link rel="stylesheet" href="css/video-scrub.css">
+
+  <script>
+    // Force browser to always reload at top opening hero page
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    if (window.location.hash) {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+    window.addEventListener('beforeunload', function () {
+      window.scrollTo(0, 0);
+    });
+  </script>
+
+  <style>
+    /* ==========================================================================
+       HERO OPENING SCROLL STORY (Harmonized, Clean & Non-Repetitive)
+       ========================================================================== */
+    :root {
+      --serif: 'Newsreader', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --sage: #5e9a82;
+      --mint: #8fcaae;
+      --amber: #f1c985;
+      --panel: rgba(255, 255, 255, 0.045);
+      --line: rgba(255, 255, 255, 0.11);
+    }
+
+    .hero-story-runway {
+      position: relative;
+      height: 2800px;
+      width: 100%;
+      background: #000;
+      z-index: 8;
+    }
+
+    .hero-story-sticky {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    #story-frame {
+      position: relative;
+      overflow: hidden;
+      width: min(100vw, calc(100svh * 16 / 9));
+      aspect-ratio: 16 / 9;
+      font-size: 16px;
+      line-height: 1.45;
+      background: radial-gradient(ellipse at 30% 40%, #13211a 0, #0a110d 45%, #060908 100%);
+    }
+
+    #story-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, .6));
+    }
+
+    #rings {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      width: 40%;
+      aspect-ratio: 4 / 3;
+      filter: drop-shadow(0 0 1.4em rgba(143, 202, 174, .35));
+      will-change: transform;
+    }
+
+    #rings svg { width: 100%; height: 100%; overflow: visible; }
+    #rings circle { fill: none; stroke-width: 7; }
+    #rings #lens { fill: var(--mint); stroke: none; }
+    #ra, #ha { stroke: var(--sage); }
+    #rb, #hb { stroke: var(--mint); }
+    #ha, #hb { stroke-width: 2; stroke-dasharray: 30 22; }
+    .gh { stroke: var(--mint); stroke-width: 3 !important; }
+
+    .story-scene {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .story-scene.center {
+      left: 6%;
+      right: 6%;
+      bottom: 12%;
+      text-align: center;
+    }
+
+    .story-scene.content {
+      left: 50%;
+      width: 44%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .story-scene.fin {
+      inset: 0;
+    }
+
+    .story-scene h1, .story-scene h2 {
+      font: 400 3.4em / 1.1 var(--serif);
+      letter-spacing: -0.015em;
+      margin: 0 0 .35em;
+      color: #e8efe9;
+    }
+
+    .story-scene h2 {
+      font-size: 2.3em;
+    }
+
+    .story-scene.center p {
+      color: #97a69d;
+      max-width: 32em;
+      margin: .8em auto 0;
+      font-size: 1.15em;
+      font-family: var(--sans);
+    }
+
+    .story-bub {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: .85em 1.15em;
+      margin: 0 0 .75em;
+      font: 400 1.5em / 1.35 var(--serif);
+      color: #e8efe9;
+    }
+
+    .story-bub b {
+      display: block;
+      font-size: .75em;
+      color: #97a69d;
+      font-weight: 500;
+      font-family: var(--sans);
+      margin-bottom: .2em;
+    }
+
+    .story-bub mark {
+      background: none;
+      color: var(--amber);
+      background-image: linear-gradient(var(--amber), var(--amber));
+      background-size: calc(var(--t, 0) * 100%) 2px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+    }
+
+    .story-note {
+      color: #97a69d;
+      font-size: 0.95em;
+      font-family: var(--sans);
+    }
+
+    .story-lockup {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 1.5em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .story-tile {
+      width: 10.5em;
+      aspect-ratio: 1;
+      flex-shrink: 0;
+      border-radius: 2.4em;
+      background: linear-gradient(145deg, rgba(143, 202, 174, .24), rgba(94, 154, 130, .07));
+      border: 1px solid rgba(143, 202, 174, .38);
+      box-shadow: 0 0 3em rgba(143, 202, 174, .14);
+      opacity: var(--t, 0);
+      transform: scale(calc(.85 + .15 * var(--t, 0)));
+    }
+
+    .story-word {
+      font: 500 5.4em / 1 var(--serif);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      opacity: var(--t, 0);
+      transform: translateX(calc((1 - var(--t, 0)) * -2em));
+      color: #e8efe9;
+    }
+
+    .story-summary {
+      position: absolute;
+      left: 50%;
+      bottom: 8%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: min(92%, 580px);
+      z-index: 6;
+      pointer-events: auto;
+    }
+
+    .story-summary p {
+      color: #97a69d;
+      font-size: 1.05em;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      font-family: var(--sans);
+    }
+
+    .story-summary-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .story-badge {
+      padding: 6px 14px;
+      background: rgba(143, 202, 174, 0.08);
+      border: 1px solid rgba(143, 202, 174, 0.3);
+      border-radius: 99px;
+      color: var(--mint);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--sans);
+    }
+
+    .story-scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #97a69d;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .story-scroll-cue:hover {
+      color: var(--mint);
+    }
+
+    .story-cue-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 3%;
+      text-align: center;
+      font-size: .8em;
+      color: #97a69d;
+      z-index: 4;
+      font-family: var(--sans);
+    }
+
+    /* Harmonized Clean Navigation */
+    .brand-mark-rings {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+
+    .site-nav {
+      background: rgba(5, 5, 5, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 36px;
+    }
+
+    .site-nav .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+      transition: color .2s ease;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    .site-nav .nav-link:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .site-nav .btn-primary {
+      border-radius: 99px;
+      padding: 8px 18px;
+      font-size: 12.5px;
+      font-weight: 600;
+      background: var(--mint);
+      color: #08130d;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .site-nav .btn-primary:hover {
+      background: #a2dbbe;
+      transform: translateY(-1px);
+    }
+
+    /* Section Enhancements */
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+
+    .card-box {
+      border-radius: 12px;
+    }
+
+    /* Minimalist, Human In-Call Clarification Section */
+    #interceptor .section-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.2vw, 42px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      text-transform: none;
+      color: #E8EFE9;
+    }
+
+    .sim-dialog-box {
+      background: rgba(255, 255, 255, 0.02) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 24px !important;
+      border-radius: 12px !important;
+    }
+
+    .dialog-meta {
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: #97A69D !important;
+      margin-bottom: 12px !important;
+    }
+
+    .dialog-quote {
+      font-family: var(--serif) !important;
+      font-size: 18px !important;
+      line-height: 1.55 !important;
+      color: #E8EFE9 !important;
+      font-style: normal !important;
+      border-left: 2px solid rgba(241, 201, 133, 0.5) !important;
+      padding-left: 18px !important;
+      margin: 0 !important;
+    }
+
+    .fuzzy-term {
+      background: rgba(241, 201, 133, 0.12);
+      color: #F1C985;
+      border: 1px solid rgba(241, 201, 133, 0.28);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-weight: 500;
+      display: inline-block;
+      line-height: 1.3;
+    }
+
+    .nudge-action-card {
+      background: rgba(143, 202, 174, 0.04) !important;
+      border: 1px solid rgba(143, 202, 174, 0.18) !important;
+      padding: 24px !important;
+      border-radius: 12px !important;
+      margin-top: 16px !important;
+    }
+
+    .nudge-tag {
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      color: #8FCAAE !important;
+      background: rgba(143, 202, 174, 0.1) !important;
+      padding: 4px 12px !important;
+      border-radius: 99px !important;
+    }
+
+    .nudge-script {
+      font-size: 15px !important;
+      line-height: 1.6 !important;
+      color: #F2F4F2 !important;
+      margin: 14px 0 10px !important;
+    }
+
+    .comp-item {
+      background: rgba(255, 255, 255, 0.02) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 16px !important;
+      border-radius: 10px !important;
+      margin-bottom: 10px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .comp-item:hover {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+    }
+
+    .comp-item.active {
+      background: rgba(143, 202, 174, 0.05) !important;
+      border-color: rgba(143, 202, 174, 0.35) !important;
+    }
+
+    .comp-vague {
+      font-size: 13.5px !important;
+      color: #9CA8A0 !important;
+      margin: 6px 0 !important;
+      line-height: 1.4 !important;
+    }
+
+    .comp-script-preview {
+      font-size: 12px !important;
+      color: #8FCAAE !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Grid Lines -->
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       CLEAN, MODERN NAVIGATION BAR (No Brackets, Sleek & Welcoming)
+       ========================================================================== -->
+  <header class="site-nav">
+    <a href="#" class="brand-wrap">
+      <div class="brand-mark-rings" aria-hidden="true">
+        <svg viewBox="0 0 32 20" width="30" height="19" fill="none">
+          <defs>
+            <clipPath id="nav-brand-clip">
+              <circle cx="11.5" cy="10" r="7"/>
+            </clipPath>
+          </defs>
+          <circle cx="20.5" cy="10" r="7" clip-path="url(#nav-brand-clip)" fill="rgba(143,202,174,0.4)"/>
+          <circle cx="11.5" cy="10" r="7" stroke="#5E9A82" stroke-width="1.8"/>
+          <circle cx="20.5" cy="10" r="7" stroke="#8FCAAE" stroke-width="1.8"/>
+        </svg>
+      </div>
+      <span class="brand-title">The Mutual</span>
+      <span class="brand-badge" style="border-radius:99px;">Chrome &middot; Safari</span>
+    </a>
+
+    <nav aria-label="Main Navigation">
+      <ul class="nav-links">
+        <li><a href="#breakdown" class="nav-link">Breakdowns</a></li>
+        <li><a href="#interceptor" class="nav-link">Interceptor</a></li>
+        <li><a href="#handshake" class="nav-link">Handshake</a></li>
+        <li><a href="#preflight" class="nav-link">Pre-Flight</a></li>
+        <li><a href="#science" class="nav-link">Science</a></li>
+        <li><a href="#download" class="nav-link">Download</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn btn-primary trigger-download-modal">
+        Add to Chrome
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       OPENING STORY ANIMATION PROLOGUE (DUAL RINGS & SERIF PROSE)
+       Sets up the core problem and resolves into The Mutual without duplicating
+       the later sections.
+       ========================================================================== -->
+  <section class="hero-story-runway" id="story-runway">
+    <div class="hero-story-sticky" id="story-sticky">
+      <div id="story-frame">
+        
+        <!-- SVG Dual Rotating Venn Rings -->
+        <div id="rings">
+          <svg viewBox="-200 -150 400 300" aria-hidden="true">
+            <defs>
+              <clipPath id="cp">
+                <circle id="ca" r="70"/>
+              </clipPath>
+            </defs>
+            <g id="gs"></g>
+            <g id="pair">
+              <circle id="lens" r="70" clip-path="url(#cp)" opacity="0"/>
+              <circle id="ha" r="86"/>
+              <circle id="hb" r="86"/>
+              <circle id="ra" r="70"/>
+              <circle id="rb" r="70"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Scene 1: Welcoming Premise -->
+        <section class="story-scene center" data-s="-.05,.32">
+          <h1>Most rework starts with one vague sentence.</h1>
+          <p>The Mutual gets managers, teammates, and clients on the same page before work begins.</p>
+        </section>
+
+        <!-- Scene 2: Two Minds, Two Pictures -->
+        <section class="story-scene content" data-s=".32,.68">
+          <h2 data-r="0,.15">Two people. One sentence. Two different pictures.</h2>
+          <p class="story-bub" data-r=".15,.35"><b>Manager</b>“Make a <mark data-v=".55,.75">clean</mark> slide deck.”</p>
+          <p class="story-bub" data-r=".35,.55"><b>Manager</b>“Send it <mark data-v=".6,.8">sometime</mark> next week.”</p>
+          <p class="story-note" data-r=".75,.95">Days later: a 20-hour redo trap nobody asked for. Again.</p>
+        </section>
+
+        <!-- Scene 3: The Convergence & Unlocking The Mutual -->
+        <section class="story-scene fin" data-s=".68,1.0">
+          <div class="story-lockup">
+            <div class="story-tile" id="tile" data-v=".4,.75"></div>
+            <div class="story-word" data-v=".6,.9">The Mutual</div>
+          </div>
+          <div class="story-summary" data-r=".7,.98">
+            <p>Brings managers, teams, and clients into crystal clear alignment before work begins.</p>
+            <div class="story-summary-badges">
+              <span class="story-badge">In-Call Clarification</span>
+              <span class="story-badge">5-Point Handshake</span>
+              <span class="story-badge">Pre-Flight Audit</span>
+            </div>
+            <a href="#breakdown" class="story-scroll-cue">
+              Scroll down to explore the 10 breakdowns &darr;
+            </a>
+          </div>
+        </section>
+
+        <div class="story-cue-bottom" id="story-cue">Scroll to begin</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 1: THE BREAKDOWN (3D CARD STACK TO 2x5 MATRIX)
+       ========================================================================== -->
+  <section class="card-stack-section" id="breakdown">
+    <div class="card-stack-intro">
+      <div class="section-eyebrow">// WHY DELEGATION BREAKS DOWN</div>
+      <h2 class="section-title">The 10 Workplace Breakdowns.</h2>
+      <p class="section-desc">
+        Why do projects go off track? Teammates hesitate to ask questions out of fear. Managers assume silence means everything is clear. <strong>Scroll down to see the 10 most common workplace breakdowns unfold and land in a clear 2x5 overview.</strong>
+      </p>
+
+      <div class="segment-legend">
+        <span class="segment-pill active" style="border-radius:99px;">Sponsor &mdash; Team</span>
+        <span class="segment-pill active" style="border-radius:99px;">Manager &mdash; Employee</span>
+        <span class="segment-pill active" style="border-radius:99px;">Client &mdash; Agency / Team</span>
+      </div>
+    </div>
+
+    <!-- Scroll Runway (Track for 3D stack and 2x5 matrix landing) -->
+    <div class="card-stack-runway" id="card-stack-runway">
+      <div class="card-stack-sticky" id="card-stack-sticky">
+        
+        <!-- HUD Overlays -->
+        <div class="stack-hud">
+          <div class="stack-hud-counter" id="stack-hud-counter" style="border-radius:6px;">01 / 10 &middot; Sponsor &mdash; Team</div>
+          <div class="stack-progress-track">
+            <div class="stack-progress-bar" id="stack-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- 3D Parent Perspective Frame -->
+        <div class="stack-parent-frame">
+          <div class="stack-3d-wrapper" id="stack-3d-wrapper">
+            <div class="card-stack-center" id="card-stack-center">
+
+              <!-- CARD 01: Sponsor — Team (Vague Mandate) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Sponsor // Team</span>
+                    <span class="card-num">CASE #01</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/sponsor_team_struggle.jpg" alt="Sponsor boardroom misalignment with vague whiteboard directives" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Just make it impactful."</div>
+                      <div class="card-struggle-desc">An unanchored executive mandate. Weeks of hard work burn away on shifting leadership whims.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: VAGUE MANDATE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 02: Manager — Employee (The Redo Trap) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Manager // Employee</span>
+                    <span class="card-num">CASE #02</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/manager_employee_rework.jpg" alt="Employee frustrated in dark office with rejected presentation deck" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"This isn't what I had in mind."</div>
+                      <div class="card-struggle-desc">The 20-hour redo trap. Manager had unwritten mental models that were never spoken aloud.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: THE REDO TRAP</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 03: Client — Agency (Shifting Goalposts) -->
+              <div class="stack-card-item card-segment-client" data-segment="CLIENT &mdash; AGENCY">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Client // Agency</span>
+                    <span class="card-num">CASE #03</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/client_scope_creep.jpg" alt="Agency team on video call facing sudden scope expansion from client" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"We'll know it when we see it."</div>
+                      <div class="card-struggle-desc">Subjective drift. Three creative rounds burnt without a single agreed boundary.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: SHIFTING GOALPOSTS</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 04: Manager — Employee (The Phantom Deadline) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Manager // Employee</span>
+                    <span class="card-num">CASE #04</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/deadline_panic_desk.jpg" alt="Frantic employee looking at clock and messy calendar notes" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Send it sometime next week."</div>
+                      <div class="card-struggle-desc">Phantom deadline. Employee assumes Friday 5 PM; manager expected Tuesday 9 AM for executive prep.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: PHANTOM DEADLINE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 05: Sponsor — Team (Scope Creep) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Sponsor // Team</span>
+                    <span class="card-num">CASE #05</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/scope_creep_whiteboard.jpg" alt="Overwhelmed developer facing whiteboard with endless sticky notes" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Do whatever it takes."</div>
+                      <div class="card-struggle-desc">Scope creep inflation. No anti-goals specified. Team takes on 5 unrelated side requests.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: SCOPE CREEP</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 06: Lead — Developer (Ambiguous Architecture) -->
+              <div class="stack-card-item card-segment-manager" data-segment="LEAD &mdash; DEVELOPER">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Lead // Developer</span>
+                    <span class="card-num">CASE #06</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/architecture_ambiguity.jpg" alt="Developer staring at complex unannotated code diagrams" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Make sure it scales nicely."</div>
+                      <div class="card-struggle-desc">Unquantified non-functionals. Over-engineered caching layer built for traffic that never arrives.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: VAGUE SPECIFICATION</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 07: Client — Agency (Underestimated Complexity) -->
+              <div class="stack-card-item card-segment-client" data-segment="CLIENT &mdash; AGENCY">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Client // Agency</span>
+                    <span class="card-num">CASE #07</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/client_quick_refresh.jpg" alt="Agency project manager on a late night emergency call" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Just a quick refresh."</div>
+                      <div class="card-struggle-desc">Iceberg task. A 'simple tweak' touches 14 backend systems with zero extra budget.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: ICEBERG TASK</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 08: Manager — Employee (Responsibility Without Authority) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Manager // Employee</span>
+                    <span class="card-num">CASE #08</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/unwritten_mental_models.jpg" alt="Employee sitting in conference room awaiting approvals from 5 people" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Take full ownership."</div>
+                      <div class="card-struggle-desc">Responsibility trap. Accountable for results, but blocked at every turn without decision rights.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: NO AUTHORITY</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 09: Sponsor — Team (Committee Paralysis) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Sponsor // Team</span>
+                    <span class="card-num">CASE #09</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/voice_gap_silence.jpg" alt="Large conference table full of contradictory leadership feedback" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Align with stakeholders."</div>
+                      <div class="card-struggle-desc">Committee paralysis. Six executives give six conflicting directives. Nobody has the final vote.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: NO SINGLE DECIDER</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 10: Lead — Developer (Rushed Technical Debt) -->
+              <div class="stack-card-item card-segment-manager" data-segment="LEAD &mdash; DEVELOPER">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">Lead // Developer</span>
+                    <span class="card-num">CASE #10</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/evaluation_anxiety_delivery.jpg" alt="Developer staring at crashing terminal screen after hasty push" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Ship it ASAP, fix later."</div>
+                      <div class="card-struggle-desc">Compounding debt. 'Later' never arrives. Months spent firefighting edge cases.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: RUSHED REWORK</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: THE AMBIGUITY INTERCEPTOR (REAL-TIME CLARITY IN CALLS)
+       ========================================================================== -->
+  <section class="section-wrapper" id="interceptor">
+    <div class="section-header">
+      <div class="section-eyebrow" style="color:var(--mint); letter-spacing:0.06em;">In-Call Clarification</div>
+      <h2 class="section-title">Catch fuzzy instructions in real time.</h2>
+      <p class="section-desc">
+        When someone says <em>"make it clean"</em> or <em>"sometime next week"</em>, The Mutual runs quietly in your Google Meet, Zoom, or Slack calls, spotting ambiguous requests and suggesting polite, friendly questions to clarify expectations before hanging up.
+      </p>
+    </div>
+
+    <!-- Live Interceptor Simulator -->
+    <div class="interceptor-showcase-grid">
+      <!-- Left: Interactive Speech Bubble & Nudge -->
+      <div class="simulator-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span class="mono-tag" style="border-radius:99px; border:1px solid rgba(255,255,255,0.12); color:#97A69D;">Live Call Transcript</span>
+          <span style="font-family:var(--font-mono); font-size:11px; color:#8FCAAE;">&bull; MUTUAL ACTIVE</span>
+        </div>
+
+        <div class="sim-dialog-box" style="border-radius:12px;">
+          <div class="dialog-meta" id="sim-speaker">Marcus (VP of Product):</div>
+          <blockquote class="dialog-quote" id="sim-quote">
+            “<span class="fuzzy-term">Sometime next week</span>, put together a <span class="fuzzy-term">clean deck</span> for leadership review... throw in <span class="fuzzy-term">some numbers</span> and make it look <span class="fuzzy-term">professional</span>.”
+          </blockquote>
+        </div>
+
+        <div class="nudge-action-card" style="border-radius:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="nudge-tag" style="border-radius:99px;">Friendly clarification suggested</span>
+            <button class="btn btn-secondary btn-sm" id="btn-copy-script" style="border-radius:99px;">Copy Script</button>
+          </div>
+          <p class="nudge-script" id="sim-nudge-script">
+            “Marcus, before we wrap up—to protect team focus: by 'sometime next week', should I lock in Wednesday 2 PM or Friday close of business? And regarding metrics, which 2 KPI sources should serve as our single source of truth?”
+          </p>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);" id="sim-ob-mechanism">
+            Frames inquiries around protecting project focus rather than personal hesitation, making it completely natural to ask.
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Clickable Scenarios Matrix -->
+      <div class="comparison-list">
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;">
+          Select a delegation scenario to test live:
+        </div>
+
+        <div class="comp-item active" data-preset="deck" style="border-radius:10px;">
+          <div class="comp-item-header">
+            <span class="comp-category">Manager // Employee</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:#8FCAAE;">ACTIVE DEMO</span>
+          </div>
+          <div class="comp-vague">“<span class="fuzzy-term">Sometime next week</span>, put together a <span class="fuzzy-term">clean deck</span>... throw in some numbers.”</div>
+          <div class="comp-script-preview">&rarr; Clarifies exact cutoff timestamp and single source of truth.</div>
+        </div>
+
+        <div class="comp-item" data-preset="feature" style="border-radius:10px;">
+          <div class="comp-item-header">
+            <span class="comp-category">Lead // Developer</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">“Make sure it <span class="fuzzy-term">scales nicely</span>, loop in whoever you need, let's ship <span class="fuzzy-term">ASAP</span>.”</div>
+          <div class="comp-script-preview">&rarr; Binds RPS performance threshold and single sign-off decider.</div>
+        </div>
+
+        <div class="comp-item" data-preset="client" style="border-radius:10px;">
+          <div class="comp-item-header">
+            <span class="comp-category">Client // Agency</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">“Give it a fresh look, <span class="fuzzy-term">we'll know it when we see it</span>.”</div>
+          <div class="comp-script-preview">&rarr; Enforces 3 explicit Anti-Goals and 24h review SLA.</div>
+        </div>
+
+        <div class="comp-item" data-preset="sponsor" style="border-radius:10px;">
+          <div class="comp-item-header">
+            <span class="comp-category">Sponsor // Team</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">“We need <span class="fuzzy-term">high-impact results</span> for the board. <span class="fuzzy-term">Do whatever it takes</span>.”</div>
+          <div class="comp-script-preview">&rarr; Binds 3 verifiable 30-day deliverables and deprioritizes backlogs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: THE ALIGNMENT HANDSHAKE (VIDEO SCRUB STORYTELLING)
+       ========================================================================== -->
+  <section class="handshake-story-section" id="handshake">
+    <div class="video-scrub-runway" id="video-scrub-runway">
+      <div class="video-scrub-sticky" id="video-scrub-sticky">
+
+        <!-- Background Video (Frame-by-frame scrubbed on scroll) -->
+        <video 
+          id="handshake-video" 
+          class="scrub-video-element" 
+          src="business_handshake.mp4" 
+          playsinline 
+          muted 
+          preload="auto"
+          aria-hidden="true">
+          <source src="business_handshake.mp4" type="video/mp4">
+          <source src="assets/business_handshake.mp4" type="video/mp4">
+        </video>
+
+        <!-- Dynamic Dimmer Overlay -->
+        <div class="video-dimmer-overlay" id="video-dimmer-overlay"></div>
+        <div class="video-grid-overlay"></div>
+
+        <!-- HUD Navigation -->
+        <div class="video-scrub-hud">
+          <div class="video-hud-tag" style="border-radius:6px;">The Alignment Handshake</div>
+          <div class="video-scrub-progress" style="border-radius:6px;">
+            <div class="scrub-timeline-bar">
+              <div class="scrub-timeline-fill" id="scrub-timeline-fill"></div>
+            </div>
+            <span id="scrub-pct-text">0% CONSENSUS</span>
+          </div>
+        </div>
+
+        <!-- Two-Column Storytelling Stage -->
+        <div class="video-story-stage">
+          
+          <!-- Narrative Column -->
+          <div class="story-narrative-col">
+            <div class="story-stage-indicator" id="story-stage-indicator" style="border-radius:99px;">
+              PHASE 01 // BEFORE THE HANDSHAKE
+            </div>
+            <h2 class="story-heading" id="story-heading">
+              BEFORE THE <span class="handshake-keyword">HANDSHAKE</span>: WHERE ASSUMPTIONS COLLIDE
+            </h2>
+            <p class="story-body" id="story-body">
+              In typical calls, instructions are casual: <strong>"Put together something clean by next week."</strong> The employee nods to avoid <strong>fear of asking</strong>. The manager thinks they were crystal clear. Two completely different pictures of <strong>"Done"</strong> are already in motion.
+            </p>
+
+            <div class="story-signoff-strip" style="border-radius:10px;">
+              <div class="signoff-party">
+                <span class="signoff-chip" style="border-radius:50%;">KN</span>
+                <span>Neehal (Employee):</span>
+                <span id="signoff-neehal" style="color:#D97706; font-weight:700;">[ PENDING ]</span>
+              </div>
+              <span class="signoff-sep">|</span>
+              <div class="signoff-party">
+                <span class="signoff-chip" style="border-radius:50%;">BM</span>
+                <span>Bhushith (Manager):</span>
+                <span id="signoff-bhushith" style="color:#D97706; font-weight:700;">[ PENDING ]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro-Contract Card Column -->
+          <div class="contract-display-card" style="border-radius:14px;">
+            <div class="contract-card-header">
+              <span class="contract-type-tag" style="border-radius:99px;">5-Point Binding Micro-Contract</span>
+              <span class="contract-consensus-badge" style="border-radius:99px;">Consensus Lock</span>
+            </div>
+
+            <div class="contract-clauses-stack">
+              <div class="clause-row active" data-clause="0" style="border-radius:8px;">
+                <span class="clause-num">01.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Core Deliverable &amp; Format</span>
+                  <span class="clause-val">5-Slide Google Slides deck in 2026 Executive template (no narrative memo).</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="1" style="border-radius:8px;">
+                <span class="clause-num">02.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Hard Deadline &amp; Turnaround SLA</span>
+                  <span class="clause-val">Draft cutoff Wednesday 17:00 EST. 24-hour turnaround SLA for review feedback.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="2" style="border-radius:8px;">
+                <span class="clause-num">03.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Definition of Done (DoD)</span>
+                  <span class="clause-val">3 Criteria: Q3 retention cohort chart, CAC breakdown, and 3 board risk bullets.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="3" style="border-radius:8px;">
+                <span class="clause-num">04.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Out-of-Scope Guardrails (Anti-Goals)</span>
+                  <span class="clause-val">Explicitly excluded: Q4 international rollout models, APAC pricing forecasts.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="4" style="border-radius:8px;">
+                <span class="clause-num">05.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Single Sign-Off Authority</span>
+                  <span class="clause-val">Designated sole approver: Marcus Chen. Bypasses cross-functional committee drift.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contract-footer">
+              <span class="contract-status-label">// DUAL BILATERAL SIGN-OFF REQUIRED</span>
+              <span style="font-family:var(--font-mono); font-size:11px; color:#38DF78;">&check; BINDING PROTOCOL</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: PRE-FLIGHT CHECK (OBJECTIVE AUDIT)
+       ========================================================================== -->
+  <section class="section-wrapper" id="preflight">
+    <div class="section-header">
+      <div class="section-eyebrow">// OBJECTIVE PRE-FLIGHT CHECK</div>
+      <h2 class="section-title">Send Deliverables With Complete Confidence.</h2>
+      <p class="section-desc">
+        Draft your work in Google Docs, Notion, or Gmail. Before you hit Send, The Mutual checks your draft against your agreed 5-point checklist—giving you instant confirmation that you nailed every requirement before anyone reviews it.
+      </p>
+    </div>
+
+    <div class="preflight-grid">
+      <!-- Left: Interactive Audit Card -->
+      <div class="auditor-card" style="border-radius:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="mono-tag" style="border-radius:99px; padding:2px 8px; font-size:10px;">Pre-Flight Verifier</span>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-sm active" id="btn-audit-strong" style="border-radius:99px;">Strong Sample</button>
+            <button class="btn btn-secondary btn-sm" id="btn-audit-flawed" style="border-radius:99px;">Flawed Sample</button>
+          </div>
+        </div>
+
+        <div class="score-display-box" style="border-radius:10px;">
+          <div>
+            <div class="score-main" id="audit-score-num">94%</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); text-transform:uppercase;">
+              CONTRACT COMPLIANCE INDEX
+            </div>
+          </div>
+          <span class="clause-badge-pass" id="audit-verdict-badge" style="border-radius:99px;">Verified &middot; Low Risk</span>
+        </div>
+
+        <div class="clause-check-list" id="audit-checklist">
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">01. Deliverable &amp; Format</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">5-Slide Executive Summary in 2026 Keynote format</div>
+            </div>
+            <span class="clause-badge-pass" style="border-radius:99px;">Verified</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">02. Hard Deadline &amp; SLA</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Wednesday, Oct 15 at 17:00 EST with 24h SLA</div>
+            </div>
+            <span class="clause-badge-pass" style="border-radius:99px;">Verified</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">03. Definition of Done</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">3 Measurable DoD criteria fully satisfied</div>
+            </div>
+            <span class="clause-badge-pass" style="border-radius:99px;">Verified</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">04. Out-of-Scope Guardrails</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Zero unapproved scope additions detected</div>
+            </div>
+            <span class="clause-badge-pass" style="border-radius:99px;">Verified</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">05. Sign-off Authority</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Designated: Marcus Chen (VP Product)</div>
+            </div>
+            <span class="clause-badge-pass" style="border-radius:99px;">Verified</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-dark-800); border:1px solid var(--border-hairline); border-radius:10px; padding:16px;">
+          <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-tertiary); text-transform:uppercase; margin-bottom:6px;">
+            Pre-Flight Safeguard Guidance:
+          </div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.5;" id="audit-remedy-text">
+            Draft aligns with agreed Micro-Contract terms. Safe to submit with complete peace of mind.
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Why It Works Explanation -->
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--bg-card); border:1px solid var(--border-hairline); border-radius:14px; padding:28px;">
+          <div class="section-eyebrow" style="margin-bottom:8px;">// PEACE OF MIND</div>
+          <h3 style="font-size:20px; font-weight:700; font-family:var(--serif); margin-bottom:12px; color:var(--text-primary);">
+            Like Spellcheck for Your Project Goals
+          </h3>
+          <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px;">
+            No more second-guessing yourself at midnight. When you aren't sure whether your manager wanted a quick 3-slide summary or a 20-page document, it's easy to overwork out of stress.
+          </p>
+          <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">
+            The Pre-Flight Check gives you complete peace of mind: it checks your work directly against what you both agreed on in the Handshake, so you know it's ready before anyone reviews it.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-hairline); border-radius:14px; padding:28px;">
+          <div class="section-eyebrow" style="margin-bottom:8px;">// WORKS WHERE YOU WORK</div>
+          <h3 style="font-size:20px; font-weight:700; font-family:var(--serif); margin-bottom:12px; color:var(--text-primary);">
+            Seamless In-App Support
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline); border-radius:8px;">&bull; Google Docs</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline); border-radius:8px;">&bull; Notion</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline); border-radius:8px;">&bull; Gmail &amp; Outlook</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline); border-radius:8px;">&bull; Google Slides</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: BEHAVIORAL RESEARCH & SCIENCE
+       ========================================================================== -->
+  <section class="section-wrapper" id="science">
+    <div class="section-header">
+      <div class="section-eyebrow">// THE BEHAVIORAL SCIENCE</div>
+      <h2 class="section-title">Backed by Proven Workplace Research.</h2>
+      <p class="section-desc">
+        The Mutual isn't another generic AI bot. It is grounded in decades of proven organizational behavior research to solve the real human reasons why projects derail.
+      </p>
+    </div>
+
+    <div class="ob-table-wrapper" style="border-radius:14px; overflow:hidden;">
+      <table class="ob-table">
+        <thead>
+          <tr>
+            <th>Research Pioneer</th>
+            <th>Key Insight</th>
+            <th>Why Teams Struggle</th>
+            <th>How The Mutual Fixes It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ob-theorist">Amy Edmondson (Harvard)</td>
+            <td class="ob-concept">Psychological Safety</td>
+            <td>People hesitate to ask clarifying questions on calls because they don't want to look unqualified.</td>
+            <td>Gives you friendly, respectful questions you can read aloud that make getting clarity feel completely natural.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Denise Rousseau (Carnegie Mellon)</td>
+            <td class="ob-concept">Unwritten Expectations</td>
+            <td>Both managers and teammates hold silent, unwritten assumptions about what "good" means, leading to surprise rework.</td>
+            <td>Replaces silent guesswork with an agreed 5-point Handshake signed in 30 seconds before work begins.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Locke &amp; Latham</td>
+            <td class="ob-concept">Clear Goals</td>
+            <td>Telling people "just do your best" or "make it impactful" leads to confusion and wasted effort.</td>
+            <td>Locks in exact measurable targets for what "Done" actually looks like, along with a firm turnaround SLA.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Kahneman &amp; Tversky</td>
+            <td class="ob-concept">Scope Creep &amp; Optimism</td>
+            <td>Leaders often add new requests mid-week without realizing how much time they take, ballooning project scope.</td>
+            <td>Sets clear Out-of-Scope guardrails (Anti-Goals) upfront, keeping projects focused and protected.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: DOWNLOAD & INSTALLATION SUITE
+       ========================================================================== -->
+  <section class="section-wrapper" id="download">
+    <div class="section-header">
+      <div class="section-eyebrow">// DOWNLOAD &amp; GET STARTED</div>
+      <h2 class="section-title">Start Using The Mutual Today.</h2>
+      <p class="section-desc">
+        Free browser extension for Apple Safari and Google Chrome. Completely private, runs directly on your computer.
+      </p>
+    </div>
+
+    <div class="download-grid">
+      <!-- Option 1: Google Chrome Extension -->
+      <div class="download-card" style="border-radius:14px;">
+        <div class="download-card-header">
+          <span class="download-tag" style="border-radius:99px;">Chrome &middot; Brave &middot; Edge</span>
+          <h3 class="download-title" style="font-family:var(--serif);">Chrome Extension</h3>
+          <p class="download-desc">
+            Install directly into Google Chrome, Brave, Arc, or Microsoft Edge. Opens in your browser side panel during calls.
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Modern Manifest V3 extension</div>
+          <div>&bull; Google Meet &amp; Zoom sidepanel</div>
+          <div>&bull; Zero external cloud dependencies</div>
+        </div>
+        <a href="assets/the-mutual-extension-chrome.zip" download="the-mutual-extension-chrome.zip" class="btn btn-primary" style="width:100%; border-radius:99px; text-align:center;">
+          Download Chrome Zip &darr;
+        </a>
+      </div>
+
+      <!-- Option 2: macOS Safari Extension -->
+      <div class="download-card" style="border-radius:14px;">
+        <div class="download-card-header">
+          <span class="download-tag" style="border-radius:99px;">Native macOS &middot; Safari 18+</span>
+          <h3 class="download-title" style="font-family:var(--serif);">macOS Safari App</h3>
+          <p class="download-desc">
+            Native app with embedded Safari Web Extension. Injects a helpful side drawer you can open anytime with Option+M (⌥M).
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Works on Safari 18+ (macOS)</div>
+          <div>&bull; Quick shortcut: Option+M (⌥M)</div>
+          <div>&bull; 100% private in-browser helper</div>
+        </div>
+        <a href="assets/the-mutual-macos-safari.zip" download="the-mutual-macos-safari.zip" class="btn btn-primary" style="width:100%; border-radius:99px; text-align:center;">
+          Download Safari App &darr;
+        </a>
+      </div>
+
+      <!-- Option 3: Local Testbench -->
+      <div class="download-card" style="border-radius:14px;">
+        <div class="download-card-header">
+          <span class="download-tag" style="border-radius:99px;">Local Testbench &middot; Python</span>
+          <h3 class="download-title" style="font-family:var(--serif);">Web Testbench</h3>
+          <p class="download-desc">
+            Run our lightweight Python backend at http://localhost:8000 for team presentations and live classroom demos.
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Simple runner: ./run.sh</div>
+          <div>&bull; Local port: http://localhost:8000</div>
+          <div>&bull; Fully offline demo companion</div>
+        </div>
+        <button class="btn btn-secondary trigger-download-modal" style="width:100%; border-radius:99px;">
+          View Setup Guide &rarr;
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer style="border-top:1px solid var(--border-hairline); padding:48px 36px; text-align:center; color:var(--text-tertiary); font-size:13px; font-family:var(--sans);">
+    <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:12px;">
+      <svg viewBox="0 0 32 20" width="24" height="15" fill="none">
+        <circle cx="10" cy="10" r="7.5" stroke="#5E9A82" stroke-width="1.8"/>
+        <circle cx="22" cy="10" r="7.5" stroke="#8FCAAE" stroke-width="1.8"/>
+      </svg>
+      <span style="color:var(--text-primary); font-weight:600;">The Mutual</span>
+    </div>
+    <p>Behavioral alignment before work begins. Free and private browser extension.</p>
+  </footer>
+
+  <!-- ==========================================================================
+       DOWNLOAD / SETUP GUIDE MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="download-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box" style="border-radius:16px;">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">Installation Guide &middot; The Mutual</span>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" data-tab="chrome" style="border-radius:99px;">Chrome (MV3)</button>
+        <button class="modal-tab-btn" data-tab="safari" style="border-radius:99px;">Safari (macOS)</button>
+        <button class="modal-tab-btn" data-tab="local" style="border-radius:99px;">Local Backend</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Pane 1: Chrome -->
+        <div class="modal-pane" id="pane-chrome" style="display:flex; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            Install The Mutual directly into Google Chrome, Brave, Arc, or Microsoft Edge.
+          </p>
+
+          <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-primary); display:flex; flex-direction:column; gap:8px;">
+            <div>1. Download <code style="color:#8FCAAE;">the-mutual-extension-chrome.zip</code> and unzip it.</div>
+            <div>2. In Chrome, navigate to your extensions page:</div>
+          </div>
+
+          <div class="terminal-box" style="border-radius:8px;">
+            <code>chrome://extensions</code>
+            <button class="terminal-copy-btn" data-copy="chrome://extensions" style="border-radius:6px;">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            3. In the top-right corner, toggle on <strong>Developer mode</strong>.<br>
+            4. Click <strong>Load unpacked</strong> and select the unzipped directory.<br>
+            5. Pin <strong>The Mutual</strong> in your browser toolbar!
+          </div>
+
+          <a href="assets/the-mutual-extension-chrome.zip" download="the-mutual-extension-chrome.zip" class="btn btn-primary" style="margin-top:8px; border-radius:99px; text-align:center;">
+            Download Chrome Extension (.zip)
+          </a>
+        </div>
+
+        <!-- Pane 2: Safari -->
+        <div class="modal-pane" id="pane-safari" style="display:none; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            The Mutual is packaged as a native macOS App (<code style="color:#8FCAAE;">The Mutual.app</code>) with an embedded Safari extension bundle.
+          </p>
+
+          <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-primary); display:flex; flex-direction:column; gap:8px;">
+            <div>1. Download and extract the macOS package.</div>
+            <div>2. In Terminal, run the launch script:</div>
+          </div>
+
+          <div class="terminal-box" style="border-radius:8px;">
+            <code>./launch_safari.sh</code>
+            <button class="terminal-copy-btn" data-copy="./launch_safari.sh" style="border-radius:6px;">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            3. In Safari: Open <strong>Settings &rarr; Advanced</strong> &rarr; Check <strong>"Show features for web developers"</strong>.<br>
+            4. In menu bar: <strong>Develop &rarr; Allow Unsigned Extensions</strong>.<br>
+            5. In <strong>Safari &rarr; Settings &rarr; Extensions</strong>: Enable <strong>"The Mutual"</strong>.
+          </div>
+
+          <a href="assets/the-mutual-macos-safari.zip" download="the-mutual-macos-safari.zip" class="btn btn-primary" style="margin-top:8px; border-radius:99px; text-align:center;">
+            Download Safari Bundle (.zip)
+          </a>
+        </div>
+
+        <!-- Pane 3: Local Backend -->
+        <div class="modal-pane" id="pane-local" style="display:none; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            Run the zero-dependency Python server for testing and demonstrations.
+          </p>
+
+          <div class="terminal-box" style="border-radius:8px;">
+            <code>python3 backend/app/server.py</code>
+            <button class="terminal-copy-btn" data-copy="python3 backend/app/server.py" style="border-radius:6px;">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Open <a href="http://localhost:8000" target="_blank" style="color:var(--mint); text-decoration:underline;">http://localhost:8000</a> to interact with the live workplace simulator.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCRIPTS
+       ========================================================================== -->
+  
+  <!-- 1. Hero Opening Scroll Story Engine -->
+  <script>
+  (function () {
+    const $ = s => document.querySelector(s);
+    const NS = 'http://www.w3.org/2000/svg';
+    const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const sm = t => t * t * (3 - 2 * t);
+    const seg = (p, a, b) => clamp((p - a) / (b - a));
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    // Runway progress keyframes for rings: [p, x, y, scale, separation, dy]
+    const K = [
+      [0.0, 0.5, 0.38, 1.0, 230, 0],
+      [0.2, 0.5, 0.38, 1.0, 230, 0],
+      [0.35, 0.26, 0.5, 0.85, 210, 0],
+      [0.50, 0.26, 0.5, 0.85, 200, 20],
+      [0.65, 0.26, 0.5, 0.88, 140, 0],
+      [0.78, 0.45, 0.42, 0.75, 70, 0],
+      [0.88, 0.4, 0.38, 0.32, 70, 0],
+      [1.0, 0.4, 0.38, 0.32, 70, 0]
+    ];
+
+    function rk(p) {
+      let i = 0;
+      while (i < K.length - 2 && p > K[i + 1][0]) i++;
+      const a = K[i], b = K[i + 1], t = sm(seg(p, a[0], b[0]));
+      return a.map((v, j) => lerp(v, b[j], t));
+    }
+
+    const F = $('#story-frame');
+    const runway = $('#story-runway');
+    if (!F || !runway) return;
+
+    const ghosts = [];
+    for (let i = 0; i < 8; i++) {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('class', 'gh');
+      c.setAttribute('r', 22 + (i % 4) * 8);
+      c.setAttribute('opacity', 0);
+      $('#gs').appendChild(c);
+      ghosts.push(c);
+    }
+
+    const scenes = [...document.querySelectorAll('.story-scene')].map(el => {
+      const [a, b] = el.dataset.s.split(',').map(Number);
+      return {
+        el, a, b,
+        items: [...el.querySelectorAll('[data-r],[data-v]')].map(n => ({
+          n,
+          r: (n.dataset.r || n.dataset.v).split(',').map(Number),
+          v: !n.dataset.r
+        }))
+      };
+    });
+
+    function measure() {
+      const fr = F.getBoundingClientRect(), t = $('#tile');
+      if (!t) return;
+      const tr = t.getBoundingClientRect();
+      const tx = (tr.left + tr.width / 2 - fr.left) / fr.width;
+      const ty = (tr.top + tr.height / 2 - fr.top) / fr.height;
+      const s = tr.width / 260;
+      K[6] = [0.88, tx, ty, s, 70, 0];
+      K[7] = [1.0, tx, ty, s, 70, 0];
+    }
+
+    function fit() {
+      F.style.fontSize = (F.clientWidth / 80) + 'px';
+      measure();
+    }
+    addEventListener('resize', fit);
+    fit();
+    document.fonts && document.fonts.ready.then(fit);
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cur = 0;
+
+    function getStoryProgress() {
+      const rect = runway.getBoundingClientRect();
+      const maxScroll = runway.offsetHeight - window.innerHeight;
+      if (maxScroll <= 0) return 0;
+      return clamp(-rect.top / maxScroll);
+    }
+
+    function set(id, k, v) { $(id).setAttribute(k, v); }
+
+    function draw(p, time) {
+      const k = rk(p);
+      const early = 1 - sm(seg(p, 0.1, 0.6));
+      let [, x, y, s, sep, dy] = k;
+
+      sep += Math.sin(time * 0.0012) * 25 * early;
+      const oy = Math.sin(time * 0.0013) * 25 * early;
+      const by = dy - oy;
+      const rot = 360 * sm(seg(p, 0.55, 0.85)) + Math.sin(time * 0.0008) * 10 * early;
+
+      const r = $('#rings');
+      r.style.left = x * 100 + '%';
+      r.style.top = y * 100 + '%';
+      r.style.transform = `translate(-50%, -50%) scale(${s})`;
+
+      $('#pair').setAttribute('transform', `rotate(${rot})`);
+      for (const id of ['#ra', '#ha', '#ca']) { set(id, 'cx', -sep / 2); set(id, 'cy', oy); }
+      for (const id of ['#rb', '#hb', '#lens']) { set(id, 'cx', sep / 2); set(id, 'cy', by); }
+
+      const flash = 0.6 * Math.exp(-Math.pow((p - 0.75) / 0.03, 2));
+      set('#lens', 'opacity', Math.min(0.9, clamp((140 - sep) / 75) * 0.4 + flash).toFixed(2));
+
+      const hO = (0.55 * (1 - sm(seg(p, 0.5, 0.7))) + 0.45 * sm(seg(p, 0.85, 0.96))).toFixed(2);
+      const off = -time * 0.03;
+      for (const id of ['#ha', '#hb']) { set(id, 'opacity', hO); set(id, 'stroke-dashoffset', off); }
+
+      const gO = (0.6 * (1 - sm(seg(p, 0.45, 0.65))) + 0.35 * sm(seg(p, 0.88, 0.98))).toFixed(2);
+      const R = p < 0.65 ? lerp(215, 30, sm(seg(p, 0.04, 0.55))) : 120;
+      ghosts.forEach((g, i) => {
+        const a = i * Math.PI / 4 + time * 0.0009 * (1 + (i % 3) * 0.35);
+        g.setAttribute('cx', Math.cos(a) * R);
+        g.setAttribute('cy', Math.sin(a) * R * 0.5);
+        g.setAttribute('opacity', gO);
+      });
+
+      scenes.forEach(S => {
+        const al = sm(seg(p, S.a, S.a + 0.04)) * (S.b >= 1 ? 1 : 1 - sm(seg(p, S.b - 0.04, S.b)));
+        S.el.style.opacity = al;
+        S.el.style.visibility = al > 0.01 ? 'visible' : 'hidden';
+        const q = seg(p, S.a, S.b);
+        S.items.forEach(({ n, r, v }) => {
+          const t = sm(seg(q, r[0], r[1]));
+          n.style.setProperty('--t', t);
+          if (!v) {
+            n.style.opacity = t;
+            n.style.transform = `translateY(${(1 - t) * 1}em)`;
+          }
+        });
+      });
+
+      const cue = $('#story-cue');
+      if (cue) cue.style.opacity = 1 - seg(p, 0, 0.08);
+    }
+
+    function loop(t) {
+      const target = getStoryProgress();
+      cur = reduce ? target : cur + (target - cur) * 0.1;
+      draw(cur, t);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+  </script>
+
+  <!-- 2. Section 1: 3D Card Stack to 2x5 Matrix Landing Engine -->
+  <script src="js/card-stack-scroll.js"></script>
+
+  <!-- 3. Section 3: Handshake Video Scrubbing Engine -->
+  <script src="js/video-scrubber.js"></script>
+
+  <!-- 4. Interactive Scenarios & Modal Handler -->
+  <script src="js/app.js"></script>
+
+  <!-- 5. URL Scroll Parameter Helper for Instant Deep Linking -->
+  <script>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const scrollTarget = params.get('scrollto');
+    const yVal = params.get('y');
+    if (scrollTarget) {
+      const el = document.getElementById(scrollTarget);
+      if (el) {
+        const offset = scrollTarget === 'breakdown' ? 1600 : (scrollTarget === 'handshake' ? 1800 : 0);
+        const top = el.getBoundingClientRect().top + window.scrollY + offset;
+        window.scrollTo(0, top);
+      }
+    } else if (yVal) {
+      window.scrollTo(0, parseFloat(yVal));
+    }
+  })();
+  </script>
+</body>
+</html>

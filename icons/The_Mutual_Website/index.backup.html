@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mutual — Behavioral Alignment & Delegation Handshake</title>
+  <meta name="description" content="An Organizational Behavior (OB) intervention for delegation failure. Active real-time ambiguity interception, 5-point binding micro-contracts, and pre-flight deliverable audits.">
+
+  <!-- Core Architectural Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/card-stack.css">
+  <link rel="stylesheet" href="css/video-scrub.css">
+</head>
+<body>
+
+  <!-- Ambient Grid Lines -->
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <header class="site-nav">
+    <a href="#" class="brand-wrap">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <span class="brand-title">THE MUTUAL</span>
+      <span class="brand-badge">SAFARI // CHROME</span>
+    </a>
+
+    <nav aria-label="Main Navigation">
+      <ul class="nav-links">
+        <li><a href="#breakdown" class="nav-link">[ 01 // THE BREAKDOWN ]</a></li>
+        <li><a href="#interceptor" class="nav-link">[ 02 // INTERCEPTOR ]</a></li>
+        <li><a href="#handshake" class="nav-link">[ 03 // HANDSHAKE ]</a></li>
+        <li><a href="#preflight" class="nav-link">[ 04 // PRE-FLIGHT ]</a></li>
+        <li><a href="#science" class="nav-link">[ 05 // THE SCIENCE ]</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn btn-primary btn-sm trigger-download-modal">
+        [ DOWNLOAD EXTENSION ]
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION (Welcoming, Uncluttered, Plain English)
+       ========================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-eyebrow">
+      <span class="mono-tag">[ THE MUTUAL // FREE BROWSER EXTENSION ]</span>
+      <span class="mono-tag" style="background:transparent; border-color:var(--border-hairline); color:var(--text-secondary);">
+        SAFARI 18+ &bull; CHROME 120+ &bull; OPTION+M
+      </span>
+    </div>
+
+    <h1 class="hero-title">
+      Stop <strong>guessing</strong> what your manager wants.<br>
+      Lock the <span class="text-highlight"><strong>Handshake</strong></span> before you leave the call.
+    </h1>
+
+    <p class="hero-desc">
+      Have you ever spent 20 hours working on a project, only to hear: <em>"This isn't what I had in mind"</em>? <strong>The Mutual</strong> is a friendly browser extension for Google Meet, Zoom, and Slack that helps you and your manager agree on clear goals, formats, and deadlines before you start working.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn btn-primary trigger-download-modal">
+        [ DOWNLOAD FREE EXTENSION &darr; ]
+      </button>
+      <a href="#breakdown" class="btn btn-secondary">
+        [ SEE HOW IT WORKS &rarr; ]
+      </a>
+    </div>
+
+    <!-- Welcoming 3-Step Benefit Grid -->
+    <div class="hero-benefits-grid">
+      <div class="hero-benefit-card">
+        <div class="benefit-step-num">01. IN THE CALL</div>
+        <div class="benefit-card-title"><strong>Catches Fuzzy Instructions</strong></div>
+        <p class="benefit-card-desc">When someone says <em>"make it clean"</em> or <em>"sometime next week"</em>, it privately suggests friendly, polite questions to ask so you get clarity without feeling awkward.</p>
+      </div>
+      <div class="hero-benefit-card">
+        <div class="benefit-step-num">02. BEFORE HANGING UP</div>
+        <div class="benefit-card-title"><strong>Locks the Handshake</strong></div>
+        <p class="benefit-card-desc">Turns the conversation into a simple 5-point checklist. Both of you click <strong>Sign Off</strong> in 30 seconds so everyone is on the same page.</p>
+      </div>
+      <div class="hero-benefit-card">
+        <div class="benefit-step-num">03. BEFORE SENDING</div>
+        <div class="benefit-card-title"><strong>Audits Your Draft</strong></div>
+        <p class="benefit-card-desc">Checks your work in Google Docs or Notion against your agreed checklist. Hit Send with complete confidence that you met every goal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 1: THE BREAKDOWN (3D CARD STACK TO 2x5 MATRIX)
+       ========================================================================== -->
+  <section class="card-stack-section" id="breakdown">
+    <div class="card-stack-intro">
+      <div class="section-eyebrow">[ 01 // THE 10 WORKPLACE BREAKDOWNS ]</div>
+      <h2 class="section-title">WHY DELEGATION BREAKS DOWN.</h2>
+      <p class="section-desc">
+        Why do projects go off track? Teammates hesitate to ask questions because they don't want to look awkward. Managers assume silence means everything is clear. <strong>Scroll down to see the 10 most common workplace breakdowns unfold and land in a clear 2x5 overview.</strong>
+      </p>
+
+      <div class="segment-legend">
+        <span class="segment-pill active">[ SPONSOR &mdash; TEAM ]</span>
+        <span class="segment-pill active">[ MANAGER &mdash; EMPLOYEE ]</span>
+        <span class="segment-pill active">[ CLIENT &mdash; AGENCY / TEAM ]</span>
+      </div>
+    </div>
+
+    <!-- Scroll Runway (Track for 3D stack and 2x5 matrix landing) -->
+    <div class="card-stack-runway" id="card-stack-runway">
+      <div class="card-stack-sticky" id="card-stack-sticky">
+        
+        <!-- HUD Overlays -->
+        <div class="stack-hud">
+          <div class="stack-hud-counter" id="stack-hud-counter">[ 01 / 10 // SPONSOR &mdash; TEAM ]</div>
+          <div class="stack-progress-track">
+            <div class="stack-progress-bar" id="stack-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- 3D Parent Perspective Frame -->
+        <div class="stack-parent-frame">
+          <div class="stack-3d-wrapper" id="stack-3d-wrapper">
+            <div class="card-stack-center" id="card-stack-center">
+
+              <!-- CARD 01: Sponsor — Team (Vague Mandate) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ SPONSOR // TEAM ]</span>
+                    <span class="card-num">CASE #01</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/sponsor_team_struggle.jpg" alt="Sponsor boardroom misalignment with vague whiteboard directives" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Just make it impactful."</div>
+                      <div class="card-struggle-desc">An unanchored executive mandate. Weeks of hard work burn away on shifting leadership whims.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: VAGUE MANDATE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 02: Manager — Employee (The Redo Trap) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ MANAGER // EMPLOYEE ]</span>
+                    <span class="card-num">CASE #02</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/manager_employee_rework.jpg" alt="Employee frustrated in dark office with rejected presentation deck" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"This isn't what I had in mind."</div>
+                      <div class="card-struggle-desc">The Redo Trap: 20 hours spent building an executive slide deck, rejected in 30 seconds.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: THE 20-HOUR REDO TRAP</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 03: Client — Agency (Creeping Scope) -->
+              <div class="stack-card-item card-segment-client" data-segment="CLIENT &mdash; AGENCY">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ CLIENT // AGENCY ]</span>
+                    <span class="card-num">CASE #03</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/client_scope_creep.jpg" alt="Boardroom dispute over amended contract and unbilled revision requests" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"We assumed this was included."</div>
+                      <div class="card-struggle-desc">Creeping scope. Without agreed boundaries upfront, projects expand into endless unpaid revisions.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: CREEPING SCOPE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 04: Manager — Employee (Afraid to Ask) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ MANAGER // EMPLOYEE ]</span>
+                    <span class="card-num">CASE #04</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/voice_gap_silence.jpg" alt="Remote employee hesitating on video call afraid to ask clarifying questions" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"I was afraid to ask what 'clean' meant."</div>
+                      <div class="card-struggle-desc">Hesitating to speak up. Teammates stay silent on calls rather than asking for clarity to avoid looking awkward.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: HESITATING TO ASK</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 05: Sponsor — Team (Different Ideas of Done) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ SPONSOR // TEAM ]</span>
+                    <span class="card-num">CASE #05</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/unwritten_mental_models.jpg" alt="Two business partners at boardroom table looking at contradictory blueprints" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"I thought we were on the same page."</div>
+                      <div class="card-struggle-desc">Managers assume their casual words were clear; team members picture something completely different.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: DIFFERENT IDEAS OF DONE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 06: Manager — Employee (Submission Anxiety) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ MANAGER // EMPLOYEE ]</span>
+                    <span class="card-num">CASE #06</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/evaluation_anxiety_delivery.jpg" alt="Professional hand hesitating over send button at 2 AM with apprehension" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Is this what they actually wanted?"</div>
+                      <div class="card-struggle-desc">Submission Anxiety. Staring at the Send button late at night wondering if you met hidden expectations.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: SUBMISSION ANXIETY</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 07: Client — Team (Moving Goalposts) -->
+              <div class="stack-card-item card-segment-client" data-segment="CLIENT &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ CLIENT // TEAM ]</span>
+                    <span class="card-num">CASE #07</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/client_scope_creep.jpg" alt="Disputed contract deliverables and moving goalposts" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"We'll know it when we see it."</div>
+                      <div class="card-struggle-desc">Moving goalposts. Without a clear checklist for what "Done" means, every review starts from scratch.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: MOVING GOALPOSTS</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 08: Sponsor — Team (Mid-Week Whiplash) -->
+              <div class="stack-card-item card-segment-sponsor" data-segment="SPONSOR &mdash; TEAM">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ SPONSOR // TEAM ]</span>
+                    <span class="card-num">CASE #08</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/sponsor_team_struggle.jpg" alt="Whiteboard pivot chaos and executive whiplash" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Can we pivot before Friday?"</div>
+                      <div class="card-struggle-desc">Mid-week whiplash. Sudden direction changes in hallway chats without adjusting deadlines or capacity.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: MID-WEEK WHIPLASH</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 09: Manager — Employee (Too Many Deciders) -->
+              <div class="stack-card-item card-segment-manager" data-segment="MANAGER &mdash; EMPLOYEE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ MANAGER // EMPLOYEE ]</span>
+                    <span class="card-num">CASE #09</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/manager_employee_rework.jpg" alt="Employee surrounded by coffee cups on Version 12 of deliverable" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Q4 Strategy — Version 12 (Final Final)."</div>
+                      <div class="card-struggle-desc">Too many deciders. Six different people giving contradictory feedback because no single decider was named.</div>
+                    </div>
+                    <div class="card-ob-tag">// PROBLEM: TOO MANY DECIDERS</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 10: The Solution (The 5-Point Handshake) -->
+              <div class="stack-card-item card-segment-manager" data-segment="THE MUTUAL HANDSHAKE">
+                <div class="card-box">
+                  <div class="card-meta-bar">
+                    <span class="card-segment-tag">[ THE MUTUAL HANDSHAKE ]</span>
+                    <span class="card-num">CASE #10</span>
+                  </div>
+                  <div class="card-image-wrap">
+                    <img src="assets/images/unwritten_mental_models.jpg" alt="Resolving psychological contracts through bilateral alignment" loading="eager">
+                  </div>
+                  <div class="card-content-body">
+                    <div>
+                      <div class="card-struggle-quote">"Let's lock the Handshake right now."</div>
+                      <div class="card-struggle-desc">The Solution: Both parties sign off on 5 clear points before a single hour of work begins.</div>
+                    </div>
+                    <div class="card-ob-tag">// THE SOLUTION: 5-POINT MUTUAL HANDSHAKE</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: PILLAR 1 — AMBIGUITY INTERCEPTOR
+       ========================================================================== -->
+  <section class="section-wrapper" id="interceptor">
+    <div class="section-header">
+      <div class="section-eyebrow">[ 02 // REAL-TIME INTERCEPTOR ]</div>
+      <h2 class="section-title">CATCH VAGUE INSTRUCTIONS BEFORE YOU HANG UP.</h2>
+      <p class="section-desc">
+        During Google Meet, Zoom, or Slack calls, people often use vague phrases like <em>"make it clean"</em> or <em>"sometime next week."</em> The Mutual privately gives you polite, friendly questions you can read aloud to get crystal-clear direction without feeling awkward.
+      </p>
+    </div>
+
+    <div class="interceptor-grid">
+      <!-- Left: Interactive Live Simulator Showcase -->
+      <div class="interceptor-showcase">
+        <div class="showcase-header">
+          <div>
+            <span class="mono-tag" style="padding:2px 8px; font-size:10px;">[ IN-CALL HELPER // FLOATING DRAWER ]</span>
+          </div>
+          <span class="status-badge-live">[ LISTENING ACTIVE ]</span>
+        </div>
+
+        <div class="sim-dialog-box">
+          <div class="dialog-meta" id="sim-speaker">Marcus (VP of Product):</div>
+          <blockquote class="dialog-quote" id="sim-quote">
+            "Sometime next week, put together a clean deck for leadership review... throw in some numbers and make it look professional."
+          </blockquote>
+        </div>
+
+        <div class="nudge-action-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="nudge-tag">[ FRIENDLY QUESTION SUGGESTED ]</span>
+            <button class="btn btn-secondary btn-sm" id="btn-copy-script">[ COPY SCRIPT ]</button>
+          </div>
+          <p class="nudge-script" id="sim-nudge-script">
+            "Marcus, before we wrap up—to protect team focus: by 'sometime next week', should I lock in Wednesday 2 PM or Friday close of business? And regarding metrics, which 2 KPI sources should serve as our single source of truth?"
+          </p>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);" id="sim-ob-mechanism">
+            Frames inquiries around protecting project focus rather than personal hesitation, making it completely natural to ask.
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Clickable Scenarios Matrix -->
+      <div class="comparison-list">
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:4px;">
+          Select a delegation scenario to test live:
+        </div>
+
+        <div class="comp-item active" data-preset="deck">
+          <div class="comp-item-header">
+            <span class="comp-category">[ MANAGER // EMPLOYEE ]</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--green-accent);">ACTIVE DEMO</span>
+          </div>
+          <div class="comp-vague">"Sometime next week, put together a clean deck... throw in some numbers."</div>
+          <div class="comp-script-preview">&rarr; Nudge: Locks exact cutoff timestamp and single source of truth.</div>
+        </div>
+
+        <div class="comp-item" data-preset="feature">
+          <div class="comp-item-header">
+            <span class="comp-category">[ LEAD // DEVELOPER ]</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">"Make sure it scales nicely, loop in whoever you need, let's ship ASAP."</div>
+          <div class="comp-script-preview">&rarr; Nudge: Binds RPS performance threshold and single sign-off decider.</div>
+        </div>
+
+        <div class="comp-item" data-preset="client">
+          <div class="comp-item-header">
+            <span class="comp-category">[ CLIENT // AGENCY ]</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">"Give it a fresh modern look, we'll know it when we see it."</div>
+          <div class="comp-script-preview">&rarr; Nudge: Enforces 3 explicit Anti-Goals and 24h review SLA.</div>
+        </div>
+
+        <div class="comp-item" data-preset="sponsor">
+          <div class="comp-item-header">
+            <span class="comp-category">[ SPONSOR // TEAM ]</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);">CLICK TO LOAD</span>
+          </div>
+          <div class="comp-vague">"We need high-impact results for the board next month. Do whatever it takes."</div>
+          <div class="comp-script-preview">&rarr; Nudge: Binds 3 verifiable 30-day deliverables and deprioritizes backlogs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: PILLAR 2 — THE ALIGNMENT HANDSHAKE (VIDEO SCRUB STORYTELLING)
+       ========================================================================== -->
+  <section class="handshake-story-section" id="handshake">
+    <div class="video-scrub-runway" id="video-scrub-runway">
+      <div class="video-scrub-sticky" id="video-scrub-sticky">
+
+        <!-- Background Video (Frame-by-frame scrubbed on scroll) -->
+        <video 
+          id="handshake-video" 
+          class="scrub-video-element" 
+          src="business_handshake.mp4" 
+          playsinline 
+          muted 
+          preload="auto"
+          aria-hidden="true">
+          <source src="business_handshake.mp4" type="video/mp4">
+          <source src="assets/business_handshake.mp4" type="video/mp4">
+        </video>
+
+        <!-- Dynamic Dimmer Overlay (Darkens & shifts green as scroll moves) -->
+        <div class="video-dimmer-overlay" id="video-dimmer-overlay"></div>
+        <div class="video-grid-overlay"></div>
+
+        <!-- HUD Navigation -->
+        <div class="video-scrub-hud">
+          <div class="video-hud-tag">[ 03 // THE ALIGNMENT HANDSHAKE ]</div>
+          <div class="video-scrub-progress">
+            <div class="scrub-timeline-bar">
+              <div class="scrub-timeline-fill" id="scrub-timeline-fill"></div>
+            </div>
+            <span id="scrub-pct-text">0% CONSENSUS</span>
+          </div>
+        </div>
+
+        <!-- Two-Column Storytelling Stage -->
+        <div class="video-story-stage">
+          
+          <!-- Narrative Column -->
+          <div class="story-narrative-col">
+            <div class="story-stage-indicator" id="story-stage-indicator">
+              [ PHASE 01 // BEFORE THE HANDSHAKE ]
+            </div>
+            <h2 class="story-heading" id="story-heading">
+              BEFORE THE <span class="handshake-keyword">HANDSHAKE</span>: WHERE ASSUMPTIONS COLLIDE
+            </h2>
+            <p class="story-body" id="story-body">
+              In typical calls, instructions are casual: <strong>"Put together something clean by next week."</strong> The employee nods to avoid <strong>fear of asking</strong>. The manager thinks they were crystal clear. Two completely different pictures of <strong>"Done"</strong> are already in motion.
+            </p>
+
+            <div class="story-signoff-strip">
+              <div class="signoff-party">
+                <span class="signoff-chip">KN</span>
+                <span>Neehal (Employee):</span>
+                <span id="signoff-neehal" style="color:#D97706; font-weight:700;">[ PENDING ]</span>
+              </div>
+              <span class="signoff-sep">|</span>
+              <div class="signoff-party">
+                <span class="signoff-chip">BM</span>
+                <span>Bhushith (Manager):</span>
+                <span id="signoff-bhushith" style="color:#D97706; font-weight:700;">[ PENDING ]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro-Contract Card Column -->
+          <div class="contract-display-card">
+            <div class="contract-card-header">
+              <span class="contract-type-tag">[ 5-POINT BINDING MICRO-CONTRACT ]</span>
+              <span class="contract-consensus-badge">[ CONSENSUS LOCK ]</span>
+            </div>
+
+            <div class="contract-clauses-stack">
+              <div class="clause-row active" data-clause="0">
+                <span class="clause-num">01.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Core Deliverable &amp; Format</span>
+                  <span class="clause-val">5-Slide Google Slides deck in 2026 Executive template (no narrative memo).</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="1">
+                <span class="clause-num">02.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Hard Deadline &amp; Turnaround SLA</span>
+                  <span class="clause-val">Draft cutoff Wednesday 17:00 EST. 24-hour turnaround SLA for review feedback.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="2">
+                <span class="clause-num">03.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Definition of Done (DoD)</span>
+                  <span class="clause-val">3 Criteria: Q3 retention cohort chart, CAC breakdown, and 3 board risk bullets.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="3">
+                <span class="clause-num">04.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Out-of-Scope Guardrails (Anti-Goals)</span>
+                  <span class="clause-val">Explicitly excluded: Q4 international rollout models, APAC pricing forecasts.</span>
+                </div>
+              </div>
+
+              <div class="clause-row" data-clause="4">
+                <span class="clause-num">05.</span>
+                <div class="clause-info">
+                  <span class="clause-title">Single Sign-Off Authority</span>
+                  <span class="clause-val">Designated sole approver: Marcus Chen. Bypasses cross-functional committee drift.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contract-footer">
+              <span class="contract-status-label">// DUAL BILATERAL SIGN-OFF REQUIRED</span>
+              <span style="font-family:var(--font-mono); font-size:11px; color:#38DF78;">&check; BINDING PROTOCOL</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: PILLAR 3 — PRE-FLIGHT CHECK (OBJECTIVE AUDIT)
+       ========================================================================== -->
+  <section class="section-wrapper" id="preflight">
+    <div class="section-header">
+      <div class="section-eyebrow">[ 04 // OBJECTIVE PRE-FLIGHT CHECK ]</div>
+      <h2 class="section-title">SEND YOUR WORK WITH COMPLETE CONFIDENCE.</h2>
+      <p class="section-desc">
+        Draft your work in Google Docs, Notion, or Gmail. Before you hit Send, The Mutual checks your draft against your agreed 5-point checklist—giving you instant confirmation that you nailed every requirement before anyone reviews it.
+      </p>
+    </div>
+
+    <div class="preflight-grid">
+      <!-- Left: Interactive Audit Card -->
+      <div class="auditor-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="mono-tag" style="padding:2px 8px; font-size:10px;">[ PRE-FLIGHT VERIFIER ]</span>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-sm active" id="btn-audit-strong">[ STRONG SAMPLE ]</button>
+            <button class="btn btn-secondary btn-sm" id="btn-audit-flawed">[ FLAWED SAMPLE ]</button>
+          </div>
+        </div>
+
+        <div class="score-display-box">
+          <div>
+            <div class="score-main" id="audit-score-num">94%</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); text-transform:uppercase;">
+              CONTRACT COMPLIANCE INDEX
+            </div>
+          </div>
+          <span class="clause-badge-pass" id="audit-verdict-badge">[ VERIFIED // LOW RISK ]</span>
+        </div>
+
+        <div class="clause-check-list" id="audit-checklist">
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">01. Deliverable &amp; Format</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">5-Slide Executive Summary in 2026 Keynote format</div>
+            </div>
+            <span class="clause-badge-pass">[ VERIFIED ]</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">02. Hard Deadline &amp; SLA</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Wednesday, Oct 15 at 17:00 EST with 24h SLA</div>
+            </div>
+            <span class="clause-badge-pass">[ VERIFIED ]</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">03. Definition of Done</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">3 Measurable DoD criteria fully satisfied</div>
+            </div>
+            <span class="clause-badge-pass">[ VERIFIED ]</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">04. Out-of-Scope Guardrails</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Zero unapproved scope additions detected</div>
+            </div>
+            <span class="clause-badge-pass">[ VERIFIED ]</span>
+          </div>
+
+          <div class="clause-item">
+            <div>
+              <div style="font-weight:700; color:var(--text-primary);">05. Sign-off Authority</div>
+              <div style="font-size:11.5px; color:var(--text-secondary);">Designated: Marcus Chen (VP Product)</div>
+            </div>
+            <span class="clause-badge-pass">[ VERIFIED ]</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-dark-800); border:1px solid var(--border-hairline); padding:16px;">
+          <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-tertiary); text-transform:uppercase; margin-bottom:6px;">
+            Pre-Flight Safeguard Guidance:
+          </div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.5;" id="audit-remedy-text">
+            Draft aligns with agreed Micro-Contract terms. Safe to submit with high psychological safety.
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Why It Works Explanation -->
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--bg-card); border:1px solid var(--border-hairline); padding:28px;">
+          <div class="section-eyebrow" style="margin-bottom:8px;">[ PEACE OF MIND ]</div>
+          <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; margin-bottom:12px; color:var(--text-primary);">
+            Like Spellcheck for Your Project Goals
+          </h3>
+          <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px;">
+            No more second-guessing yourself at midnight. When you aren't sure if your manager wanted a quick 3-slide summary or a 20-page document, it's easy to overwork out of stress.
+          </p>
+          <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">
+            The Pre-Flight Check gives you complete peace of mind: it checks your work directly against what you both agreed on in the Handshake, so you know it's ready before anyone reviews it.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-hairline); padding:28px;">
+          <div class="section-eyebrow" style="margin-bottom:8px;">[ WORKS WHERE YOU WORK ]</div>
+          <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; margin-bottom:12px; color:var(--text-primary);">
+            Seamless In-App Support
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline);">&bull; Google Docs</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline);">&bull; Notion</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline);">&bull; Gmail &amp; Outlook</div>
+            <div style="padding:10px; background:var(--bg-dark-800); border:1px solid var(--border-hairline);">&bull; Google Slides</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: ACADEMIC FOUNDATIONS (BEHAVIORAL RESEARCH)
+       ========================================================================== -->
+  <section class="section-wrapper" id="science">
+    <div class="section-header">
+      <div class="section-eyebrow">[ 05 // THE BEHAVIORAL SCIENCE ]</div>
+      <h2 class="section-title">BACKED BY PROVEN WORKPLACE RESEARCH.</h2>
+      <p class="section-desc">
+        The Mutual isn't another generic AI bot. It is grounded in decades of proven organizational behavior research to solve the real human reasons why projects derail.
+      </p>
+    </div>
+
+    <div class="ob-table-wrapper">
+      <table class="ob-table">
+        <thead>
+          <tr>
+            <th>Research Pioneer</th>
+            <th>Key Insight</th>
+            <th>Why Teams Struggle</th>
+            <th>How The Mutual Fixes It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ob-theorist">Amy Edmondson (Harvard)</td>
+            <td class="ob-concept">Psychological Safety</td>
+            <td>People hesitate to ask clarifying questions on calls because they don't want to look unqualified.</td>
+            <td>Gives you friendly, respectful questions you can read aloud that make getting clarity feel completely natural.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Denise Rousseau (Carnegie Mellon)</td>
+            <td class="ob-concept">Unwritten Expectations</td>
+            <td>Both managers and teammates hold silent, unwritten assumptions about what "good" means, leading to surprise rework.</td>
+            <td>Replaces silent guesswork with an agreed 5-point Handshake signed in 30 seconds before work begins.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Locke &amp; Latham</td>
+            <td class="ob-concept">Clear Goals</td>
+            <td>Telling people "just do your best" or "make it impactful" leads to confusion and wasted effort.</td>
+            <td>Locks in exact measurable targets for what "Done" actually looks like, along with a firm turnaround SLA.</td>
+          </tr>
+          <tr>
+            <td class="ob-theorist">Kahneman &amp; Tversky</td>
+            <td class="ob-concept">Scope Creep &amp; Optimism</td>
+            <td>Leaders often add new requests mid-week without realizing how much time they take, ballooning project scope.</td>
+            <td>Sets clear Out-of-Scope guardrails (Anti-Goals) upfront, keeping projects focused and protected.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: DOWNLOAD & INSTALLATION SUITE
+       ========================================================================== -->
+  <section class="section-wrapper" id="download">
+    <div class="section-header">
+      <div class="section-eyebrow">[ 06 // DOWNLOAD &amp; GET STARTED ]</div>
+      <h2 class="section-title">START USING THE MUTUAL TODAY.</h2>
+      <p class="section-desc">
+        Free browser extension for Apple Safari and Google Chrome. Completely private, runs directly on your computer.
+      </p>
+    </div>
+
+    <div class="download-grid">
+      <!-- Option 1: macOS Safari Extension -->
+      <div class="download-card">
+        <div class="download-card-header">
+          <span class="download-tag">[ NATIVE MACOS // SAFARI 18+ ]</span>
+          <h3 class="download-title">macOS Safari App</h3>
+          <p class="download-desc">
+            Native app with embedded Safari Web Extension. Injects a helpful side drawer you can open anytime with Option+M (⌥M).
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Works on Safari 18+ (macOS)</div>
+          <div>&bull; Quick shortcut: Option+M (⌥M)</div>
+          <div>&bull; 100% private in-browser helper</div>
+        </div>
+        <a href="assets/the-mutual-macos-safari.zip" download="the-mutual-macos-safari.zip" class="btn btn-primary" style="width:100%;">
+          [ DOWNLOAD SAFARI APP &darr; ]
+        </a>
+      </div>
+
+      <!-- Option 2: Google Chrome Extension -->
+      <div class="download-card">
+        <div class="download-card-header">
+          <span class="download-tag">[ CHROME &amp; BRAVE // SIDE PANEL ]</span>
+          <h3 class="download-title">Chrome Extension</h3>
+          <p class="download-desc">
+            Install into Google Chrome, Brave, Arc, or Microsoft Edge. Opens right in your browser's side panel during calls.
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Modern Manifest V3 extension</div>
+          <div>&bull; Google Meet &amp; Zoom sidepanel</div>
+          <div>&bull; Zero external cloud dependencies</div>
+        </div>
+        <a href="assets/the-mutual-extension-chrome.zip" download="the-mutual-extension-chrome.zip" class="btn btn-primary" style="width:100%;">
+          [ DOWNLOAD CHROME ZIP &darr; ]
+        </a>
+      </div>
+
+      <!-- Option 3: Local Testbench -->
+      <div class="download-card">
+        <div class="download-card-header">
+          <span class="download-tag">[ DEVELOPER // STANDALONE ]</span>
+          <h3 class="download-title">Web Testbench</h3>
+          <p class="download-desc">
+            Run our lightweight Python backend at http://localhost:8000 for team presentations and live classroom demos.
+          </p>
+        </div>
+        <div class="download-specs">
+          <div>&bull; Simple runner: ./run.sh</div>
+          <div>&bull; Local port: http://localhost:8000</div>
+          <div>&bull; Fully offline demo companion</div>
+        </div>
+        <button class="btn btn-secondary trigger-download-modal" style="width:100%;">
+          [ VIEW SETUP GUIDE &rarr; ]
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       DOWNLOAD MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="download-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">[ INSTALLATION GUIDE // THE MUTUAL ]</span>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">[ ESC / CLOSE ]</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" data-tab="safari">1. Safari (macOS)</button>
+        <button class="modal-tab-btn" data-tab="chrome">2. Chrome (MV3)</button>
+        <button class="modal-tab-btn" data-tab="local">3. Local Backend</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Pane 1: Safari -->
+        <div class="modal-pane" id="pane-safari" style="display:flex; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            The Mutual is packaged as a native macOS App (<code style="color:#38DF78;">The Mutual.app</code>) with an embedded Safari extension bundle.
+          </p>
+
+          <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-primary); display:flex; flex-direction:column; gap:8px;">
+            <div>1. Download and extract the macOS package.</div>
+            <div>2. In Terminal, run the launch script:</div>
+          </div>
+
+          <div class="terminal-box">
+            <code>./launch_safari.sh</code>
+            <button class="terminal-copy-btn" data-copy="./launch_safari.sh">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            3. In Safari: Open <strong>Settings &rarr; Advanced</strong> &rarr; Check <strong>"Show features for web developers"</strong>.<br>
+            4. In menu bar: <strong>Develop &rarr; Allow Unsigned Extensions</strong>.<br>
+            5. In <strong>Safari &rarr; Settings &rarr; Extensions</strong>: Enable <strong>"The Mutual"</strong>.
+          </div>
+
+          <a href="assets/the-mutual-macos-safari.zip" download="the-mutual-macos-safari.zip" class="btn btn-primary" style="margin-top:8px;">
+            [ DOWNLOAD SAFARI BUNDLE (.ZIP) ]
+          </a>
+        </div>
+
+        <!-- Pane 2: Chrome -->
+        <div class="modal-pane" id="pane-chrome" style="display:none; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            Install The Mutual directly into Google Chrome, Brave, Arc, or Microsoft Edge.
+          </p>
+
+          <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-primary); display:flex; flex-direction:column; gap:8px;">
+            <div>1. Download <code style="color:#38DF78;">the-mutual-extension-chrome.zip</code> and unzip it.</div>
+            <div>2. Navigate to your browser extensions page:</div>
+          </div>
+
+          <div class="terminal-box">
+            <code>chrome://extensions</code>
+            <button class="terminal-copy-btn" data-copy="chrome://extensions">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            3. In the top-right corner, toggle on <strong>Developer mode</strong>.<br>
+            4. Click <strong>Load unpacked</strong> and select the unzipped directory.<br>
+            5. Pin <strong>The Mutual</strong> in your toolbar!
+          </div>
+
+          <a href="assets/the-mutual-extension-chrome.zip" download="the-mutual-extension-chrome.zip" class="btn btn-primary" style="margin-top:8px;">
+            [ DOWNLOAD CHROME EXTENSION (.ZIP) ]
+          </a>
+        </div>
+
+        <!-- Pane 3: Local Backend -->
+        <div class="modal-pane" id="pane-local" style="display:none; flex-direction:column; gap:16px;">
+          <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.5;">
+            Run the zero-dependency Python server for testing and demonstrations.
+          </p>
+
+          <div class="terminal-box">
+            <code>python3 backend/app/server.py</code>
+            <button class="terminal-copy-btn" data-copy="python3 backend/app/server.py">COPY</button>
+          </div>
+
+          <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Or use the one-click shell runner:
+          </div>
+
+          <div class="terminal-box">
+            <code>./run.sh</code>
+            <button class="terminal-copy-btn" data-copy="./run.sh">COPY</button>
+          </div>
+
+          <p style="font-size:12px; color:var(--text-tertiary);">
+            Open <strong>http://localhost:8000</strong> to access the interactive web companion.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-title">THE MUTUAL</span>
+        <span class="footer-copy">
+          A BEHAVIORAL INTERVENTION FOR WORKPLACE ALIGNMENT &bull; PRIVATE &bull; ZERO ADS
+        </span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#breakdown" class="footer-link">[ BREAKDOWN ]</a>
+        <a href="#interceptor" class="footer-link">[ INTERCEPTOR ]</a>
+        <a href="#handshake" class="footer-link">[ HANDSHAKE ]</a>
+        <a href="#preflight" class="footer-link">[ PRE-FLIGHT ]</a>
+        <a href="#science" class="footer-link">[ THE SCIENCE ]</a>
+        <a href="#download" class="footer-link">[ DOWNLOAD ]</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/card-stack-scroll.js"></script>
+  <script src="js/video-scrubber.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

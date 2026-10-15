@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mutual — Behavioral Alignment Platform</title>
+  <link rel="stylesheet" href="styles/sidepanel.css">
+  <style>
+    /* Desktop Presentation Layout wrapper */
+    body {
+      background-color: #F5F4F0;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-navbar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .demo-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .demo-badge {
+      background: #E8EFEA;
+      color: #2D6A4F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .demo-workspace {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 20px;
+      padding: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      height: calc(100vh - 56px);
+      box-sizing: border-box;
+    }
+
+    /* Left: Simulated Google Meet / Workplace Stage */
+    .meet-stage {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .meet-header {
+      background: #FAFAF8;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .meet-body {
+      flex: 1;
+      background: #1C1917;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 24px;
+    }
+
+    .video-tile {
+      width: 100%;
+      max-width: 580px;
+      aspect-ratio: 16/9;
+      background: #292524;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    }
+
+    .avatar-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #44403C;
+      color: #F5F5F4;
+      font-size: 26px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #78716C;
+    }
+
+    .speaker-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-equalizer {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 14px;
+      margin-left: 4px;
+    }
+
+    .audio-equalizer .bar {
+      width: 3px;
+      background: #22C55E;
+      border-radius: 2px;
+      height: 3px;
+      transition: height 0.15s ease;
+    }
+
+    .audio-equalizer.active .bar:nth-child(1) { animation: soundBar 0.5s infinite alternate ease-in-out; }
+    .audio-equalizer.active .bar:nth-child(2) { animation: soundBar 0.7s infinite alternate 0.15s ease-in-out; }
+    .audio-equalizer.active .bar:nth-child(3) { animation: soundBar 0.6s infinite alternate 0.3s ease-in-out; }
+    .audio-equalizer.active .bar:nth-child(4) { animation: soundBar 0.8s infinite alternate 0.1s ease-in-out; }
+
+    @keyframes soundBar {
+      0% { height: 3px; }
+      100% { height: 14px; }
+    }
+
+    .captions-overlay {
+      position: absolute;
+      bottom: 30px;
+      max-width: 80%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      color: #F5F5F4;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Right: Chrome Extension Side Panel Container */
+    .sidepanel-frame {
+      background: var(--bg-app);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-float);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .sidepanel-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 1000px) {
+      .demo-workspace {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .sidepanel-frame {
+        height: 800px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo Header -->
+  <header class="demo-navbar">
+    <div class="demo-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="12" r="6" opacity="0.6"/>
+        <circle cx="15" cy="12" r="6"/>
+      </svg>
+      <span>The Mutual — Live Workplace Testbench</span>
+      <span class="demo-badge">Organizational Behavior Edition</span>
+    </div>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <button id="btn-toggle-panel" onclick="toggleWebSidePanel()" class="btn btn-secondary btn-sm" style="font-size:12px; display:inline-flex; align-items:center; gap:6px;">
+        <span style="background:#E7E5E4; padding:2px 6px; border-radius:4px; font-weight:700; font-size:11px;">⌥M</span>
+        <span id="toggle-panel-label">Toggle Side Panel</span>
+      </button>
+      <a href="sidepanel.html" target="_blank" class="btn btn-secondary btn-sm" style="text-decoration:none;">
+        Open Standalone ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Interactive Dual-Pane Workspace -->
+  <main class="demo-workspace">
+
+    <!-- Left: Meeting Room Stage -->
+    <section class="meet-stage">
+      <div class="meet-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="width:8px; height:8px; border-radius:50%; background:#EF4444;"></span>
+          <span style="font-weight:600; font-size:13px; color:#1C1917;">Google Meet • Bellandur Tech Corridor Sync</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn btn-secondary btn-sm" id="btn-web-audio" onclick="toggleAudioFromWeb()" style="font-size:11px;">
+            🔊 Audio: ON
+          </button>
+          <span style="font-size:11.5px; color:#78716C;">
+            The Mutual: <strong style="color:#2D6A4F;">Active</strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="meet-body">
+        <div class="video-tile">
+          <div class="avatar-circle">M</div>
+          <div style="color:#A8A29E; font-size:12px; margin-top:12px;">Marcus Vance (VP Operations, Bangalore)</div>
+          <div class="speaker-label">
+            <span style="width:6px; height:6px; border-radius:50%; background:#22C55E;"></span>
+            <span id="speaker-status-label">Speaking</span>
+            <div class="audio-equalizer" id="audio-equalizer">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="captions-overlay" id="live-captions-box">
+          Captions will stream here during simulation or live Google Meet calls.
+        </div>
+      </div>
+
+      <div style="padding:14px 18px; background:#FAFAF8; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:12px; color:var(--text-secondary);">
+          <strong>OB Insight:</strong> Superiors delegate vaguely due to the <em>Illusion of Transparency</em>.
+        </span>
+        <button class="btn btn-primary btn-sm" onclick="triggerSimFromWeb()">
+          ▶ Trigger Live Simulation
+        </button>
+      </div>
+    </section>
+
+    <!-- Right: Real Side Panel App loaded in Frame -->
+    <section class="sidepanel-frame">
+      <iframe src="sidepanel.html" id="sidepanel-iframe" allow="microphone; camera; display-capture; clipboard-write"></iframe>
+    </section>
+
+  </main>
+
+  <script>
+    let webAudioEnabled = true;
+
+    function toggleAudioFromWeb() {
+      const iframe = document.getElementById("sidepanel-iframe");
+      if (iframe && iframe.contentWindow) {
+        const btn = iframe.contentWindow.document.getElementById("btn-audio-toggle");
+        if (btn) btn.click();
+        webAudioEnabled = !webAudioEnabled;
+        const webBtn = document.getElementById("btn-web-audio");
+        if (webBtn) {
+          webBtn.innerText = webAudioEnabled ? "🔊 Audio: ON" : "🔇 Audio: OFF";
+        }
+      }
+    }
+
+    function triggerSimFromWeb() {
+      const iframe = document.getElementById("sidepanel-iframe");
+      if (iframe && iframe.contentWindow) {
+        // 1. Force the side panel to switch to Tab 1 (Interceptor)
+        const tabBtn = iframe.contentWindow.document.querySelector("[data-tab='tab-interceptor']");
+        if (tabBtn) tabBtn.click();
+
+        // 2. Start the simulation immediately
+        if (typeof iframe.contentWindow.startSimulation === "function") {
+          iframe.contentWindow.startSimulation();
+        } else {
+          const btn = iframe.contentWindow.document.getElementById("btn-start-sim");
+          if (btn) btn.click();
+        }
+      }
+    }
+
+    // Handle incoming messages from side panel
+    window.addEventListener("message", (event) => {
+      if (!event.data) return;
+
+      // Equalizer & Voice Speaking Animation
+      if (event.data.type === "SPEAKING_STATUS") {
+        const eq = document.getElementById("audio-equalizer");
+        const avatar = document.querySelector(".avatar-circle");
+        const statusLabel = document.getElementById("speaker-status-label");
+
+        if (event.data.isSpeaking) {
+          if (eq) eq.classList.add("active");
+          if (statusLabel) statusLabel.innerText = "Speaking (Audio)";
+          if (avatar) {
+            avatar.style.transition = "box-shadow 0.25s ease, border-color 0.25s ease";
+            avatar.style.boxShadow = "0 0 0 10px rgba(34, 197, 94, 0.35)";
+            avatar.style.borderColor = "#22C55E";
+          }
+        } else {
+          if (eq) eq.classList.remove("active");
+          if (statusLabel) statusLabel.innerText = "Listening";
+          if (avatar) {
+            avatar.style.boxShadow = "none";
+            avatar.style.borderColor = "#78716C";
+          }
+        }
+      }
+
+      // Live Captions & Ambiguity Tag Mirroring
+      if (event.data.type === "CAPTIONS_MIRROR") {
+        const box = document.getElementById("live-captions-box");
+
+        if (box) {
+          let badgeHtml = "";
+          if (event.data.is_ambiguous && event.data.flags && event.data.flags.length > 0) {
+            const flagCategory = event.data.flags[0].category || "Ambiguity Detected";
+            badgeHtml = `
+              <div style="margin-top:8px; display:inline-flex; align-items:center; gap:6px; background:#FEF3C7; color:#92400E; border:1px solid #FDE68A; border-radius:9999px; font-size:11px; font-weight:600; padding:3px 12px; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+                <span>⚠</span>
+                <span>Flagged by The Mutual: ${flagCategory}</span>
+              </div>
+            `;
+            box.style.borderColor = "#F59E0B";
+          } else {
+            box.style.borderColor = "rgba(255, 255, 255, 0.12)";
+          }
+
+          box.innerHTML = `
+            <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:#A8A29E; margin-bottom:4px; font-weight:600;">
+              ${event.data.speaker || "Marcus (VP)"} ${event.data.timestamp ? "• " + event.data.timestamp : ""}
+            </div>
+            <div style="font-size:14px; font-weight:500; color:#FFFFFF; line-height:1.45;">
+              "${event.data.text}"
+            </div>
+            ${badgeHtml}
+          `;
+        }
+      }
+
+      // Drawer toggle from sidepanel iframe
+      if (event.data.type === "THE_MUTUAL_TOGGLE_DRAWER") {
+        toggleWebSidePanel();
+      }
+    });
+
+    // ── Option+M Side Panel Toggle on Web Companion ──────────────────────────
+    function toggleWebSidePanel() {
+      const frame = document.querySelector(".sidepanel-frame");
+      const workspace = document.querySelector(".demo-workspace");
+      const label = document.getElementById("toggle-panel-label");
+      if (!frame || !workspace) return;
+
+      const isHidden = frame.style.display === "none";
+      if (isHidden) {
+        frame.style.display = "flex";
+        workspace.style.gridTemplateColumns = "1fr 480px";
+        if (label) label.innerText = "Hide Side Panel";
+      } else {
+        frame.style.display = "none";
+        workspace.style.gridTemplateColumns = "1fr";
+        if (label) label.innerText = "Show Side Panel";
+      }
+    }
+
+    function isOptionM(e) {
+      const isM = (e.code === "KeyM" || e.key === "m" || e.key === "M" || e.key === "µ" || e.key === "Âµ");
+      return isM && (e.altKey || (e.metaKey && e.shiftKey) || (e.ctrlKey && e.shiftKey));
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (isOptionM(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleWebSidePanel();
+      }
+    }, true);
+  </script>
+</body>
+</html>
